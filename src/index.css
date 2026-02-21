@@ -1,1 +1,40 @@
 @import "tailwindcss";
+
+:root {
+  --color-background: rgb(255, 255, 255);
+  --color-section: rgb(248, 245, 245);
+  --color-primary: rgb(59, 130, 246);
+  --color-secondary: rgb(156, 163, 175);
+  --color-text: rgb(35, 35, 36);
+  --color-border-main: rgb(209, 213, 219);
+  --color-success: rgb(34, 197, 94);
+  --color-error: rgb(239, 68, 68);
+  --image-hero: url('./assets/images/hero.png');
+}
+
+[data-theme='dark'] {
+  --color-background: rgb(17, 24, 39);
+  --color-section: rgb(30, 41, 59);
+  --color-primary: rgb(59, 130, 246);
+  --color-secondary: rgb(156, 163, 175);
+  --color-text: rgb(255, 255, 255);
+  --color-border-main: rgb(75, 85, 99);
+  --color-success: rgb(34, 197, 94);
+  --color-error: rgb(239, 68, 68);
+}
+
+@theme {
+  --color-background: var(--color-background);
+  --color-section: var(--color-section);
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);  
+  --color-text: var(--color-text);
+  --color-border-main: var(--color-border-main);
+  --color-success: var(--color-success);
+  --color-error: var(--color-error);
+  --background-image-hero: var(--image-hero);
+}
+
+body{
+  background-color: var(--color-background);
+}

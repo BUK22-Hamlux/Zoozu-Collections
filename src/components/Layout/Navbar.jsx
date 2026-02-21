@@ -1,0 +1,139 @@
+import { useState, useEffect } from "react";
+import Button from "../Common/Button";
+import Input from "../Common/Input";
+import { X, Menu, Moon, Sun, ShoppingCart, Search } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+
+function Navbar() {
+  const [theme, setTheme] = useState(
+    localStorage.getItem("app-theme") || "light",
+  );
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("app-theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
+
+  const navLinks = [
+    { name: "Products", href: "#featuredProducts" },
+    { name: "Categories", href: "#categories" },
+  ];
+
+  return (
+    <nav className="w-full z-50 bg-background border-b border-border-main flex items-center justify-between p-3 md:px-8 text-text">
+      <div className="flex items-center gap-8">
+        <h1 className="font-bold text-xl tracking-tight">Zoozu</h1>
+
+        <div className="hidden md:flex gap-6 items-center">
+          {navLinks.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              className="text-sm font-medium hover:text-primary transition-colors"
+            >
+              {link.name}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div className="hidden md:block flex-1 max-w-md mx-8">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary size-4" />
+          <Input
+            placeholder="Search products..."
+            optionalClassName="w-full pl-10 bg-section/50 border-border-main focus:ring-1 focus:ring-primary"
+          />
+        </div>
+      </div>
+
+      <div className="flex items-center gap-2 md:gap-4">
+        <button
+          onClick={toggleTheme}
+          className="p-2 hover:bg-section rounded-full transition-colors text-text"
+          aria-label="Toggle Theme"
+        >
+          {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+        </button>
+
+        <div className="relative p-2 hover:bg-section rounded-full transition-colors cursor-pointer">
+          <ShoppingCart size={20} />
+          <span className="absolute top-0 right-0 bg-primary text-white text-[10px] font-bold px-1.5 rounded-full border-2 border-background"></span>
+        </div>
+
+        <div className="hidden md:block">
+          <Button
+            text="Sign In"
+            type="primary"
+            optionalClassName="text-sm font-semibold px-5"
+          />
+        </div>
+
+        {/* mobile view for navbar*/}
+        <button
+          onClick={toggleMenu}
+          className="md:hidden p-2 hover:bg-section rounded-lg"
+        >
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      <AnimatePresence>
+        {isMenuOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={toggleMenu}
+              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 md:hidden"
+            />
+
+            <motion.div
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              className="fixed top-15 left-0 w-full bg-background border-b border-border-main p-4 flex flex-col gap-4 z-50 md:hidden shadow-xl"
+            >
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary size-4" />
+                <Input
+                  placeholder="Search products..."
+                  optionalClassName="w-full pl-10 bg-section"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1">
+                {navLinks.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    onClick={toggleMenu}
+                    className="p-3 text-base font-medium hover:bg-section rounded-lg transition-colors"
+                  >
+                    {link.name}
+                  </a>
+                ))}
+              </div>
+
+              <Button
+                text="Sign In"
+                type="primary"
+                optionalClassName="w-full py-3 font-bold"
+                onClick={toggleMenu}
+              />
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </nav>
+  );
+}
+
+export default Navbar;
