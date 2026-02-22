@@ -1,6 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { products } from "../../../data/product";
-import FeaturedProductCard from "../../../components/Products/FeaturedProductCard";
+import ProductCard from "../../../components/Products/FeaturedProductCard";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
@@ -25,13 +25,7 @@ function FeaturedProducts() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-7xl">
         {products.slice(0, 5).map((product) => (
           <div key={product.id}>
-            <FeaturedProductCard
-              name={product.name}
-              category={product.category}
-              price={product.price}
-              image={product.image}
-              rating={product.rating}
-            />
+            <ProductCard {...product} />
           </div>
         ))}
       </div>
