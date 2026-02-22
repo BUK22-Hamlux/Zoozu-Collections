@@ -3,6 +3,7 @@ import Button from "../Common/Button";
 import Input from "../Common/Input";
 import { X, Menu, Moon, Sun, ShoppingCart, Search } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { NavLink } from "react-router-dom";
 
 function Navbar() {
   const [theme, setTheme] = useState(
@@ -20,26 +21,23 @@ function Navbar() {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
-  const navLinks = [
-    { name: "Products", href: "#featuredProducts" },
-    { name: "Categories", href: "#categories" },
-  ];
-
   return (
     <nav className="w-full z-50 bg-background border-b border-border-main flex items-center justify-between p-3 md:px-8 text-text">
       <div className="flex items-center gap-8">
-        <h1 className="font-bold text-xl tracking-tight">Zoozu</h1>
+        <NavLink to="/" className="font-bold text-xl tracking-tight">
+          Zoozu
+        </NavLink>
 
         <div className="hidden md:flex gap-6 items-center">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="text-sm font-medium hover:text-primary transition-colors"
-            >
-              {link.name}
-            </a>
-          ))}
+          <NavLink
+            to="products"
+            className="hover:text-primary transition-colors"
+          >
+            Products
+          </NavLink>
+          <NavLink to="about" className="hover:text-primary transition-colors">
+            Categories
+          </NavLink>
         </div>
       </div>
 
@@ -110,16 +108,20 @@ function Navbar() {
               </div>
 
               <div className="flex flex-col gap-1">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.href}
-                    onClick={toggleMenu}
-                    className="p-3 text-base font-medium hover:bg-section rounded-lg transition-colors"
-                  >
-                    {link.name}
-                  </a>
-                ))}
+                <NavLink
+                  to="products"
+                  className="p-3 text-base font-medium hover:bg-section rounded-lg transition-colors"
+                  onClick={toggleMenu}
+                >
+                  Products
+                </NavLink>
+                <NavLink
+                  to="about"
+                  className="p-3 text-base font-medium hover:bg-section rounded-lg transition-colors"
+                  onClick={toggleMenu}
+                >
+                  Categories
+                </NavLink>
               </div>
 
               <Button

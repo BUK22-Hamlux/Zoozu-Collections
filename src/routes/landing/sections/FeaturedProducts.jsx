@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { products } from "../../../data/product";
 import FeaturedProductCard from "../../../components/Products/FeaturedProductCard";
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 function FeaturedProducts() {
   return (
@@ -14,9 +15,12 @@ function FeaturedProducts() {
           <p className="text-text/70">Discover our most popular products</p>
         </div>
 
-        <a className="hidden sm:inline-block text-blue-700 mb-8 cursor-pointer  hover:underline">
+        <NavLink
+          to="/products"
+          className="hidden sm:inline-block text-blue-700 mb-8 cursor-pointer  hover:underline"
+        >
           View all {<ArrowRight className="inline-block ml-1" />}
-        </a>
+        </NavLink>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-7xl">
         {products.slice(0, 5).map((product) => (
@@ -31,9 +35,12 @@ function FeaturedProducts() {
           </div>
         ))}
       </div>
-      <a className="block sm:hidden text-center text-blue-700 mt-8 cursor-pointer hover:underline">
+      <NavLink
+        to="/products"
+        className="block sm:hidden text-center text-blue-700 mt-8 cursor-pointer hover:underline"
+      >
         View all products
-      </a>
+      </NavLink>
     </section>
   );
 }

@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import Button from "../../../components/Common/Button";
 import { ArrowRight } from "lucide-react";
 
@@ -17,16 +18,21 @@ function HeroSection() {
           </p>
 
           <div className="flex flex-col w-full justify-center sm:flex-row gap-4 ">
-            <Button
-              text="Shop Now"
-              icon={<ArrowRight />}
-              type="primary"
-              optionalClassName="flex items-center justify-center"
-            />
-            <Button
-              text="Browse Categories"
-              optionalClassName="border border-white text-white hover:bg-white/10"
-            />
+            <NavLink to="/products">
+              <Button
+                text="Shop Now"
+                icon={<ArrowRight />}
+                type="primary"
+                optionalClassName="flex items-center justify-center"
+              />
+            </NavLink>
+
+            <NavLink to="/categories">
+              <Button
+                text="Browse Categories"
+                optionalClassName="border border-white text-white hover:bg-white/10"
+              />
+            </NavLink>
           </div>
         </div>
 

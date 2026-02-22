@@ -38,3 +38,7 @@
 body{
   background-color: var(--color-background);
 }
+
+a.active {
+  color: var(--color-primary);
+}
