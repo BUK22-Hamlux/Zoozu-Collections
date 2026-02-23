@@ -1,6 +1,7 @@
 import LandingPage from "./routes/landing/LandingPage";
 import ProductPage from "./routes/products/ProductPage";
 import RootLayout from "./components/Layout/RootLayout";
+import { CartProvider } from "./contexts/CartProvider";
 import ProductDetail from "./routes/products/ProductDetailedPage";
 import {
   Route,
@@ -8,6 +9,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const router = createBrowserRouter(
@@ -20,9 +22,10 @@ function App() {
     ),
   );
   return (
-    <div>
+    <CartProvider>
+      <Toaster position="top-center" reverseOrder={false} />
       <RouterProvider router={router} />
-    </div>
+    </CartProvider>
   );
 }
 

@@ -4,6 +4,8 @@ import Input from "../Common/Input";
 import { X, Menu, Moon, Sun, ShoppingCart, Search } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "react-router-dom";
+import { useCart } from "../../contexts/CartContext";
+import CartView from "../Cart/CartDrawer";
 
 function Navbar() {
   const [theme, setTheme] = useState(
@@ -11,6 +13,9 @@ function Navbar() {
   );
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  const { totalCartCount } = useCart();
+  const [openCartModal, setOpenCartModal] = useState(false);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -60,11 +65,19 @@ function Navbar() {
           {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
         </button>
 
-        <div className="relative p-2 hover:bg-section rounded-full transition-colors cursor-pointer">
+        <button
+          onClick={() => setOpenCartModal(true)}
+          className="relative p-2 hover:bg-section rounded-full transition-colors cursor-pointer"
+        >
           <ShoppingCart size={20} />
-          <span className="absolute top-0 right-0 bg-primary text-white text-[10px] font-bold px-1.5 rounded-full border-2 border-background"></span>
-        </div>
+          <span
+            className={`absolute ${totalCartCount <= 0 ? "hidden" : "flex"} top-0 right-0 bg-primary text-white text-[10px] font-bold px-1.5 rounded-full border-2 border-background`}
+          >
+            {totalCartCount}
+          </span>
+        </button>
 
+        {openCartModal && <CartView onClose={() => setOpenCartModal(false)} />}
         <div className="hidden md:block">
           <Button
             text="Sign In"

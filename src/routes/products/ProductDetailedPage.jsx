@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { products } from "../../data/product";
 import { useParams, useNavigate } from "react-router-dom";
 import {
@@ -9,7 +8,7 @@ import {
   Minus,
   Plus,
 } from "lucide-react";
-import ProductCard from "../../components/Products/FeaturedProductCard"; // Reuse your existing card
+import ProductCard from "../../components/Products/FeaturedProductCard";
 
 const ProductDetail = () => {
   const { id } = useParams();

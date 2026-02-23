@@ -1,10 +1,11 @@
 import { ArrowRight } from "lucide-react";
 import { products } from "../../../data/product";
 import ProductCard from "../../../components/Products/FeaturedProductCard";
-import React from "react";
+import { useCart } from "../../../contexts/CartContext";
 import { NavLink } from "react-router-dom";
 
 function FeaturedProducts() {
+  const { addToCart } = useCart();
   return (
     <section className="py-12 px-4 bg-section flex flex-col items-center">
       <div className="flex justify-center sm:justify-between mb-8 items-center w-full max-w-7xl">
@@ -25,7 +26,7 @@ function FeaturedProducts() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-7xl">
         {products.slice(0, 5).map((product) => (
           <div key={product.id}>
-            <ProductCard {...product} />
+            <ProductCard {...product} onClick={addToCart} />
           </div>
         ))}
       </div>

@@ -1,6 +1,5 @@
-import React, { useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { products } from "../../data/product";
-import { categories } from "../../data/categories";
 import { getCategoryCounts } from "../../utils/getCategoryCounts";
 import FilterSidebar from "./FilterSidebar";
 import ProductCard from "../../components/Products/FeaturedProductCard";
@@ -18,16 +17,20 @@ function ProductPage() {
     let result = [...products];
 
     if (selectedCategory !== "All Products") {
-      result = result.filter((p) => p.category === selectedCategory);
+      result = result.filter(
+        (product) => product.category === selectedCategory,
+      );
     }
 
     if (priceRange !== "All Prices") {
       if (priceRange === "Under #50,000")
-        result = result.filter((p) => p.price < 50000);
+        result = result.filter((product) => product.price < 50000);
       if (priceRange === "#50,000 - #100,000")
-        result = result.filter((p) => p.price >= 50000 && p.price <= 100000);
+        result = result.filter(
+          (product) => product.price >= 50000 && product.price <= 100000,
+        );
       if (priceRange === "Over #100,000")
-        result = result.filter((p) => p.price > 100000);
+        result = result.filter((product) => product.price > 100000);
     }
 
     if (sortBy === "Price: Low to High")

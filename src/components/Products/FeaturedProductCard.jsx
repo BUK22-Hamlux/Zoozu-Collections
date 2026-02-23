@@ -1,7 +1,22 @@
-import React from "react";
+import { ShoppingCart } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
-function FeaturedProductCard({ name, price, image, rating, category, id }) {
+function FeaturedProductCard({
+  name,
+  price,
+  image,
+  rating,
+  category,
+  id,
+  onClick,
+}) {
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    onClick({ name, price, image, rating, category, id });
+  };
+
   return (
     <NavLink to={`/products/${id}`} className="group block">
       <div className="bg-background space-y-2 p-4 rounded-lg shadow-md">
@@ -15,7 +30,15 @@ function FeaturedProductCard({ name, price, image, rating, category, id }) {
         <p className="text-yellow-500">
           ★ <span className="text-text/70">{rating}</span>
         </p>
-        <h3 className="text-text font-bold">₦{price}</h3>
+        <div className="flex justify-between text-center">
+          <h3 className="text-text font-bold">₦{price}</h3>
+          <div
+            onClick={handleAddToCart}
+            className="p-2 bg-blue-500 rounded-xl hover:bg-blue-600 cursor-pointer"
+          >
+            <ShoppingCart className="text-white size-5" />
+          </div>
+        </div>
       </div>
     </NavLink>
   );
