@@ -27,7 +27,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="w-full z-50 bg-background border-b border-border-main flex items-center justify-between p-3 md:px-8 text-text">
+    <nav className="sticky top-0 w-full z-50 bg-background border-b border-border-main flex items-center justify-between p-3 md:px-8 text-text">
       <div className="flex items-center gap-8">
         <NavLink to="/" className="font-bold text-xl tracking-tight">
           Zoozu
@@ -40,7 +40,10 @@ function Navbar() {
           >
             Products
           </NavLink>
-          <NavLink to="about" className="hover:text-primary transition-colors">
+          <NavLink
+            to="categories"
+            className="hover:text-primary transition-colors"
+          >
             Categories
           </NavLink>
         </div>
@@ -129,7 +132,7 @@ function Navbar() {
                   Products
                 </NavLink>
                 <NavLink
-                  to="about"
+                  to="categories"
                   className="p-3 text-base font-medium hover:bg-section rounded-lg transition-colors"
                   onClick={toggleMenu}
                 >

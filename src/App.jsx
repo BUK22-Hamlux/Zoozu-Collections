@@ -10,6 +10,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
+import CategoriesPage from "./routes/categories/CategoriesPage";
 
 function App() {
   const router = createBrowserRouter(
@@ -18,6 +19,7 @@ function App() {
         <Route index element={<LandingPage />} />
         <Route path="products" element={<ProductPage />} />
         <Route path="products/:id" element={<ProductDetail />} />
+        <Route path="categories" element={<CategoriesPage />} />
       </Route>,
     ),
   );

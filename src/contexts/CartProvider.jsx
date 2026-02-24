@@ -14,19 +14,21 @@ export function CartProvider({ children }) {
     0,
   );
 
-  const addToCart = (product) => {
+  // CartProvider.jsx
+  const addToCart = (product, quantity = 1) => {
+    // Added quantity parameter
     setCartItems((prev) => {
       const existingItem = prev.find((item) => item.name === product.name);
       if (existingItem) {
-        toast.success(`Another ${product.name} added to cart!`);
+        toast.success(`${quantity} more ${product.name} added!`);
         return prev.map((item) =>
           item.name === product.name
-            ? { ...item, quantity: item.quantity + 1 }
+            ? { ...item, quantity: item.quantity + quantity } // Add the specific amount
             : item,
         );
       }
       toast.success(`${product.name} added to cart!`);
-      return [...prev, { ...product, quantity: 1 }];
+      return [...prev, { ...product, quantity: quantity }]; // Start with the chosen amount
     });
   };
 

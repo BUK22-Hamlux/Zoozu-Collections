@@ -1,11 +1,6 @@
-import CategoryCard from "../../../components/Category/CategoryCard";
-import { products } from "../../../data/product";
-import { categories } from "../../../data/categories";
-import { getCategoryCounts } from "../../../utils/getCategoryCounts";
+import CategoryGrid from "../../../components/Category/CategoryGrid";
 
 function CategoriesSection() {
-  const categoryCounts = getCategoryCounts(products);
-
   return (
     <section
       id="categories"
@@ -18,16 +13,7 @@ function CategoriesSection() {
         Find exactly what you're looking for
       </p>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-7xl">
-        {categories.map((category) => (
-          <CategoryCard
-            key={category.id}
-            name={category.name}
-            image={category.image}
-            count={categoryCounts[category.name] || 0}
-          />
-        ))}
-      </div>
+      <CategoryGrid />
     </section>
   );
 }

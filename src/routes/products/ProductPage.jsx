@@ -1,17 +1,27 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { products } from "../../data/product";
 import { getCategoryCounts } from "../../utils/getCategoryCounts";
 import FilterSidebar from "./FilterSidebar";
 import ProductCard from "../../components/Products/FeaturedProductCard";
 import { SlidersHorizontal } from "lucide-react";
+import { useLocation } from "react-router-dom";
+import { useCart } from "../../contexts/CartContext";
 
 function ProductPage() {
+  const { addToCart } = useCart();
+  const location = useLocation();
   const [selectedCategory, setSelectedCategory] = useState("All Products");
   const [priceRange, setPriceRange] = useState("All Prices");
   const [sortBy, setSortBy] = useState("Featured");
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
   const categoryCounts = getCategoryCounts(products);
+
+  useEffect(() => {
+    if (location.state && location.state.category) {
+      setSelectedCategory(location.state.category);
+    }
+  }, [location.state]);
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
@@ -88,7 +98,7 @@ function ProductPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
             {filteredProducts.map((product) => (
-              <ProductCard key={product.id} {...product} />
+              <ProductCard key={product.id} {...product} onClick={addToCart} />
             ))}
           </div>
 

@@ -21,7 +21,7 @@ function Footer() {
               <Facebook className="w-5 h-5 cursor-pointer hover:text-blue-600 transition-colors" />
               <Twitter className="w-5 h-5 cursor-pointer hover:text-blue-400 transition-colors" />
               <Instagram className="w-5 h-5 cursor-pointer hover:text-pink-600 transition-colors" />
-              <Github className="w-5 h-5 cursor-pointer hover:text-white transition-colors" />
+              <Github className="w-5 h-5 cursor-pointer hover:text-text transition-colors" />
             </div>
           </div>
 

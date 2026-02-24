@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { products } from "../../data/product";
 import { useParams, useNavigate } from "react-router-dom";
 import {
@@ -9,8 +10,11 @@ import {
   Plus,
 } from "lucide-react";
 import ProductCard from "../../components/Products/FeaturedProductCard";
+import { useCart } from "../../contexts/CartContext";
 
 const ProductDetail = () => {
+  const { addToCart } = useCart();
+  const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
   const navigate = useNavigate();
   const product = products.find((p) => p.id === parseInt(id));
@@ -29,6 +33,19 @@ const ProductDetail = () => {
       </div>
     );
   }
+
+  const handleQuantityChange = (e) => {
+    const value = e.target.value;
+    if (value === "") {
+      setQuantity("");
+      return;
+    }
+
+    const numValue = parseInt(value);
+    if (!isNaN(numValue) && numValue > 0) {
+      setQuantity(numValue);
+    }
+  };
 
   const relatedProducts = products
     .filter((p) => p.category === product.category && p.id !== product.id)
@@ -88,15 +105,29 @@ const ProductDetail = () => {
               >
                 <Minus size={18} />
               </button>
-              <span className="w-12 text-center font-bold text-lg text-text">
-                1
-              </span>
-              <button className="p-1 text-text hover:text-blue-600 transition-colors">
+
+              <input
+                type="number"
+                value={quantity}
+                onChange={handleQuantityChange}
+                onBlur={() => {
+                  if (quantity === "" || quantity < 1) setQuantity(1);
+                }}
+                className="w-12 text-center font-bold text-lg text-text bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              />
+
+              <button
+                onClick={() => setQuantity(Math.max(1, quantity + 1))}
+                className="p-1 text-text hover:text-blue-600 transition-colors"
+              >
                 <Plus size={18} />
               </button>
             </div>
 
-            <button className="flex-1 min-w-50 flex items-center justify-center gap-2 bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition-all active:scale-95 shadow-lg shadow-blue-200/10">
+            <button
+              onClick={() => addToCart(product, quantity)}
+              className="flex-1 min-w-50 flex items-center justify-center gap-2 bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition-all active:scale-95 shadow-lg shadow-blue-200/10"
+            >
               <ShoppingCart size={20} />
               Add to Cart
             </button>
