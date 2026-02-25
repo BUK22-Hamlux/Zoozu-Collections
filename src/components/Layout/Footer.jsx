@@ -10,9 +10,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2">
-              <span className="text-2xl font-bold text-gray-900 tracking-tight">
-                Zoozo
-              </span>
+              <img className="w-20 h-fit" src="../../../public/logo.png" />
             </div>
             <p className="text-text/50 leading-relaxed max-w-xs">
               Your one-stop shop for all your needs. Quality Fashion wears.

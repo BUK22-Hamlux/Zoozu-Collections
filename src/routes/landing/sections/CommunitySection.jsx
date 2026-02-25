@@ -1,5 +1,5 @@
-import React from "react";
 import { ArrowRight } from "lucide-react";
+import { NavLink } from "react-router-dom";
 
 function CommunitySection() {
   return (
@@ -16,10 +16,13 @@ function CommunitySection() {
               Sign up today and get 15% off your first order
             </p>
 
-            <button className="inline-flex items-center gap-2 bg-white text-blue-600 px-8 py-4 rounded-xl font-bold text-lg transition-all hover:bg-blue-50 hover:shadow-lg active:scale-95">
+            <NavLink
+              to={"register"}
+              className="inline-flex items-center gap-2 bg-white text-blue-600 px-8 py-4 rounded-xl font-bold text-lg transition-all hover:bg-blue-50 hover:shadow-lg active:scale-95"
+            >
               Get Started
               <ArrowRight className="w-5 h-5" />
-            </button>
+            </NavLink>
           </div>
 
           {/* Optional: Subtle decorative background blur for depth */}

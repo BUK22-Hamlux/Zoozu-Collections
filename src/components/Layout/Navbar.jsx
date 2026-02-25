@@ -29,8 +29,8 @@ function Navbar() {
   return (
     <nav className="sticky top-0 w-full z-50 bg-background border-b border-border-main flex items-center justify-between p-3 md:px-8 text-text">
       <div className="flex items-center gap-8">
-        <NavLink to="/" className="font-bold text-xl tracking-tight">
-          Zoozu
+        <NavLink to="/" className="">
+          <img className="w-20 h-fit" src="../../../public/logo.png" />
         </NavLink>
 
         <div className="hidden md:flex gap-6 items-center">

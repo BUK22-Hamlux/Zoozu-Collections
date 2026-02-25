@@ -1,11 +1,34 @@
-function Input({ type = "text", placeholder, optionalClassName, onChange }) {
+// Input.jsx
+function Input({
+  label,
+  type = "text",
+  placeholder,
+  value,
+  onChange,
+  name,
+  optionalClassName = "",
+}) {
   return (
-    <input
-      type={type}
-      placeholder={placeholder}
-      onChange={onChange}
-      className={`border border-border-main rounded-xl py-2 px-4 bg-background outline-none focus:border-primary transition-all ${optionalClassName}`}
-    />
+    <div className="flex flex-col space-y-2 w-full">
+      {label && (
+        <label className="text-sm font-semibold text-text">{label}</label>
+      )}
+      <input
+        type={type}
+        name={name}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        className={`
+          w-full px-4 py-3 rounded-lg 
+          bg-background border border-text/20 
+          text-text placeholder-text/70
+          focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent
+          transition-all duration-200
+          ${optionalClassName}
+        `}
+      />
+    </div>
   );
 }
 
