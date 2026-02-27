@@ -14,6 +14,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
+import Dashboard from "./routes/dashboard/DashboardPage";
 
 function App() {
   const router = createBrowserRouter(
@@ -25,6 +26,7 @@ function App() {
         <Route path="categories" element={<CategoriesPage />} />
         <Route path="register" element={<RegisterPage />} />
         <Route path="login" element={<LoginPage />} />
+        <Route path="dashboard" element={<Dashboard />} />
       </Route>,
     ),
   );

@@ -5,7 +5,7 @@ function Button({ text, icon, onClick, type, optionalClassName }) {
       className={`rounded-xl py-2 px-6 transition-all active:scale-95 ${
         type === "primary"
           ? "bg-primary text-white hover:brightness-110"
-          : "text-text hover:bg-section"
+          : "text-text"
       } ${optionalClassName}`}
     >
       {text}

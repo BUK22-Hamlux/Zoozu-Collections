@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import Button from "../Common/Button";
 import Input from "../Common/Input";
-import { X, Menu, Moon, Sun, ShoppingCart, Search } from "lucide-react";
+import { X, Menu, Moon, Sun, ShoppingCart, Search, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import { useCart } from "../../contexts/CartContext";
 import CartView from "../Cart/CartDrawer";
+import { useAuth } from "../../contexts/AuthContext";
 
 function Navbar() {
+  const { loggedIn, logout } = useAuth();
   const [theme, setTheme] = useState(
     localStorage.getItem("app-theme") || "light",
   );
@@ -81,13 +83,20 @@ function Navbar() {
         </button>
 
         {openCartModal && <CartView onClose={() => setOpenCartModal(false)} />}
-        <div className="hidden md:block">
-          <Button
-            text="Sign In"
-            type="primary"
-            optionalClassName="text-sm font-semibold px-5"
-          />
-        </div>
+
+        {loggedIn ? (
+          <NavLink to={"profile"} className="hidden md:block">
+            <User />
+          </NavLink>
+        ) : (
+          <NavLink to={"login"} className="hidden md:block">
+            <Button
+              text="Sign In"
+              type="primary"
+              optionalClassName="text-sm font-semibold px-5"
+            />
+          </NavLink>
+        )}
 
         {/* mobile view for navbar*/}
         <button
@@ -139,13 +148,28 @@ function Navbar() {
                   Categories
                 </NavLink>
               </div>
-
-              <Button
-                text="Sign In"
-                type="primary"
-                optionalClassName="w-full py-3 font-bold"
-                onClick={toggleMenu}
-              />
+              {loggedIn ? (
+                <NavLink to={"login"}>
+                  <Button
+                    text="logout"
+                    type="NotPrimary"
+                    optionalClassName="w-full py-3 font-bold bg-red-500 hover:bg-red-600 text-white"
+                    onClick={() => {
+                      toggleMenu();
+                      logout();
+                    }}
+                  />
+                </NavLink>
+              ) : (
+                <NavLink to={"login"}>
+                  <Button
+                    text="Sign In"
+                    type="primary"
+                    optionalClassName="w-full py-3 font-bold"
+                    onClick={toggleMenu}
+                  />
+                </NavLink>
+              )}
             </motion.div>
           </>
         )}
