@@ -1,7 +1,15 @@
 import { useState, useEffect } from "react";
 import Button from "../Common/Button";
-import Input from "../Common/Input";
-import { X, Menu, Moon, Sun, ShoppingCart, Search, User } from "lucide-react";
+import SearchForm from "../Common/SearchForm";
+import {
+  X,
+  Menu,
+  Moon,
+  Sun,
+  ShoppingCart,
+  User,
+  LayoutDashboard,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import { useCart } from "../../contexts/CartContext";
@@ -31,9 +39,15 @@ function Navbar() {
   return (
     <nav className="sticky top-0 w-full z-50 bg-background border-b border-border-main flex items-center justify-between p-3 md:px-8 text-text">
       <div className="flex items-center gap-8">
-        <NavLink to="/" className="">
-          <img className="w-20 h-fit" src="../../../public/logo.png" />
-        </NavLink>
+        {loggedIn ? (
+          <NavLink to="/dashboard" className="" title="dashboard">
+            <LayoutDashboard />
+          </NavLink>
+        ) : (
+          <NavLink to="/" className="">
+            <img className="w-20 h-fit" src="/logo.png" />
+          </NavLink>
+        )}
 
         <div className="hidden md:flex gap-6 items-center">
           <NavLink
@@ -52,19 +66,14 @@ function Navbar() {
       </div>
 
       <div className="hidden md:block flex-1 max-w-md mx-8">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary size-4" />
-          <Input
-            placeholder="Search products..."
-            optionalClassName="w-full pl-10 bg-section/50 border-border-main focus:ring-1 focus:ring-primary"
-          />
-        </div>
+        <SearchForm />
       </div>
 
       <div className="flex items-center gap-2 md:gap-4">
         <button
+          title="theme"
           onClick={toggleTheme}
-          className="p-2 hover:bg-section rounded-full transition-colors text-text"
+          className="p-2 hover:bg-section rounded-full transition-colors text-text hidden md:inline-block"
           aria-label="Toggle Theme"
         >
           {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
@@ -72,6 +81,7 @@ function Navbar() {
 
         <button
           onClick={() => setOpenCartModal(true)}
+          title="cart"
           className="relative p-2 hover:bg-section rounded-full transition-colors cursor-pointer"
         >
           <ShoppingCart size={20} />
@@ -85,7 +95,7 @@ function Navbar() {
         {openCartModal && <CartView onClose={() => setOpenCartModal(false)} />}
 
         {loggedIn ? (
-          <NavLink to={"profile"} className="hidden md:block">
+          <NavLink to={"profile"} className="block" title="profile">
             <User />
           </NavLink>
         ) : (
@@ -124,13 +134,10 @@ function Navbar() {
               exit={{ y: -20, opacity: 0 }}
               className="fixed top-15 left-0 w-full bg-background border-b border-border-main p-4 flex flex-col gap-4 z-50 md:hidden shadow-xl"
             >
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary size-4" />
-                <Input
-                  placeholder="Search products..."
-                  optionalClassName="w-full pl-10 bg-section"
-                />
-              </div>
+              <SearchForm
+                className="w-full"
+                onSearchSuccess={() => setIsMenuOpen(false)}
+              />
 
               <div className="flex flex-col gap-1">
                 <NavLink
@@ -147,6 +154,21 @@ function Navbar() {
                 >
                   Categories
                 </NavLink>
+                <button
+                  onClick={toggleTheme}
+                  className="p-3 hover:bg-section rounded-lg font-medium transition-colors text-text"
+                  aria-label="Toggle Theme"
+                >
+                  {theme === "dark" ? (
+                    <div className="flex items-center gap-2">
+                      <Sun size={20} /> <p>Dark Mode</p>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <Moon size={20} /> <p>Light Mode</p>
+                    </div>
+                  )}
+                </button>
               </div>
               {loggedIn ? (
                 <NavLink to={"login"}>

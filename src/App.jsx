@@ -15,6 +15,10 @@ import {
 } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Dashboard from "./routes/dashboard/DashboardPage";
+import CartPage from "./routes/cart/CartPage";
+import SearchproductPage from "./routes/products/SearchproductPage";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import ProfilePage from "./routes/profile/ProfilePage";
 
 function App() {
   const router = createBrowserRouter(
@@ -26,7 +30,13 @@ function App() {
         <Route path="categories" element={<CategoriesPage />} />
         <Route path="register" element={<RegisterPage />} />
         <Route path="login" element={<LoginPage />} />
-        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="product" element={<SearchproductPage />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="cart" element={<CartPage />} />
+          <Route path="profile" element={<ProfilePage />} />
+        </Route>
       </Route>,
     ),
   );
