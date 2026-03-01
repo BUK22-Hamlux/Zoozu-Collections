@@ -2,7 +2,7 @@ import React from "react";
 import ProfilePicture from "./sections/ProfilePicture";
 import PersonalInfo from "./sections/PersonalInfo";
 import ChangePassword from "./sections/ChangePassword";
-import Preferences from "./sections/preferences";
+import Preferences from "./sections/Preferences";
 
 function ProfilePage() {
   return (
