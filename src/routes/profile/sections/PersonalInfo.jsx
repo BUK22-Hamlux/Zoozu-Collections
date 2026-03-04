@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { User, Mail } from "lucide-react";
 import toast from "react-hot-toast";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useInfo } from "../../../contexts/InfoContext";
 import Button from "../../../components/Common/Button";
 import ProfileInput from "../../../components/Profile/ProfileInput";
 import ProfileCard from "../../../components/Profile/ProfileCard";
 
 function PersonalInfo() {
-  const { handleProfileInfo, personalInfo } = useAuth();
+  const { handleProfileInfo, personalInfo } = useInfo();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -15,7 +15,7 @@ function PersonalInfo() {
     e.preventDefault();
 
     if (!personalInfo.fullName.trim() || !personalInfo.email.trim()) {
-      toast.error("please input your detail");
+      toast.error("please input all details");
       return;
     }
 

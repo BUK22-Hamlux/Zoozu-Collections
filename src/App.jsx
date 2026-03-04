@@ -12,6 +12,7 @@ import {
   createRoutesFromElements,
   createBrowserRouter,
   RouterProvider,
+  Navigate,
 } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Dashboard from "./routes/dashboard/DashboardPage";
@@ -19,6 +20,11 @@ import CartPage from "./routes/cart/CartPage";
 import SearchproductPage from "./routes/products/SearchproductPage";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import ProfilePage from "./routes/profile/ProfilePage";
+import CheckoutPage from "./routes/checkout/CheckoutPage";
+import Shipping from "./routes/checkout/sections/Shipping";
+import Payment from "./routes/checkout/sections/Payment";
+import Review from "./routes/checkout/sections/Review";
+import { InfoProvider } from "./contexts/InfoProvider";
 
 function App() {
   const router = createBrowserRouter(
@@ -36,16 +42,25 @@ function App() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="cart" element={<CartPage />} />
           <Route path="profile" element={<ProfilePage />} />
+
+          <Route path="checkout" element={<CheckoutPage />}>
+            <Route index element={<Navigate to="shipping" replace />} />
+            <Route path="shipping" element={<Shipping />} />
+            <Route path="payment" element={<Payment />} />
+            <Route path="review" element={<Review />} />
+          </Route>
         </Route>
       </Route>,
     ),
   );
   return (
     <AuthProvider>
-      <CartProvider>
-        <Toaster position="top-center" reverseOrder={false} />
-        <RouterProvider router={router} />
-      </CartProvider>
+      <InfoProvider>
+        <CartProvider>
+          <Toaster position="top-center" reverseOrder={false} />
+          <RouterProvider router={router} />
+        </CartProvider>
+      </InfoProvider>
     </AuthProvider>
   );
 }

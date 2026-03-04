@@ -1,10 +1,10 @@
 import React from "react";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import ProfileCard from "../../../components/Profile/ProfileCard";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useInfo } from "../../../contexts/InfoContext";
 
 function ProfilePicture() {
-  const { handleImageChange, profileImage, isUploadingImage } = useAuth();
+  const { handleImageChange, profileImage, isUploadingImage } = useInfo();
   const fileInputRef = useRef(null);
 
   return (

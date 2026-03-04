@@ -3,42 +3,33 @@ import Input from "../Common/Input";
 import { Github } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Button from "../Common/Button";
+import useFormValidation from "../../hooks/useFormValidation";
+import { required, email, minLength } from "../../utils/validationRules";
 import { useAuth } from "../../contexts/AuthContext";
 
 function LoginForm() {
   const navigate = useNavigate();
   const { login } = useAuth();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const [errors, setErrors] = useState({});
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
+  const validationRules = {
+    email: [required("Email"), email()],
+    password: [required("Password"), minLength(6)],
   };
 
-  const validate = () => {
-    let newErrors = {};
-    if (!formData.email.includes("@"))
-      newErrors.email = "Valid email is required";
-    if (formData.password.length < 6)
-      newErrors.password = "Password must be at least 6 chars";
-    return newErrors;
-  };
+  const { values, errors, handleChange, validate } = useFormValidation(
+    {
+      email: "",
+      password: "",
+    },
+    validationRules,
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = validate();
 
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
+    if (!validate()) return;
 
-    login(formData);
+    login(values);
     navigate("/dashboard");
   };
 
@@ -51,7 +42,7 @@ function LoginForm() {
             type="email"
             label="Email Address"
             onChange={handleChange}
-            value={formData.email}
+            value={values.email}
             name="email"
           />
           {errors.email && (
@@ -62,7 +53,7 @@ function LoginForm() {
             type="password"
             label="Password"
             onChange={handleChange}
-            value={formData.password}
+            value={values.password}
             name="password"
           />
           {errors.password && (

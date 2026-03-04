@@ -1,94 +1,85 @@
-import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { Github } from "lucide-react";
 import Input from "../Common/Input";
 import Button from "../Common/Button";
 import { NavLink } from "react-router-dom";
+import { required, minLength, email, match } from "../../utils/validationRules";
+import useFormValidation from "../../hooks/useFormValidation";
 
 function RegisterForm() {
   const { register } = useAuth();
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const [errors, setErrors] = useState({});
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
+  const validationRules = {
+    fullName: [required("Full name")],
+    email: [required("Email"), email()],
+    password: [required("Password"), minLength(6)],
+    confirmPassword: [required("Confirm password"), match("password")],
   };
 
-  const validate = () => {
-    let newErrors = {};
-    if (!formData.fullName.trim()) newErrors.fullName = "Full Name is required";
-    if (!formData.email.includes("@"))
-      newErrors.email = "Valid email is required";
-    if (formData.password.length < 6)
-      newErrors.password = "Password must be at least 6 chars";
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
-    }
-    return newErrors;
-  };
+  const { values, errors, handleChange, validate } = useFormValidation(
+    {
+      fullName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+    validationRules,
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = validate();
 
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
+    if (!validate()) return;
 
-    register(formData);
+    register(values);
   };
 
   return (
     <>
-      <div className="w-full max-w-md bg-background rounded-2xl p-8  shadow-2xl">
+      <div className="w-full max-w-md bg-background rounded-2xl p-8 shadow-2xl">
         <form onSubmit={handleSubmit} className="space-y-4">
           <Input
             label="Full Name"
             placeholder="Your name"
-            onChange={handleChange}
-            value={formData.fullName}
             name="fullName"
+            value={values.fullName}
+            onChange={handleChange}
           />
           {errors.fullName && (
             <p className="text-red-500 text-xs">{errors.fullName}</p>
           )}
+
           <Input
             label="Email Address"
             type="email"
             placeholder="you@example.com"
-            onChange={handleChange}
-            value={formData.email}
             name="email"
+            value={values.email}
+            onChange={handleChange}
           />
           {errors.email && (
             <p className="text-red-500 text-xs">{errors.email}</p>
           )}
+
           <Input
             label="Password"
             type="password"
-            onChange={handleChange}
             placeholder="••••••••"
-            value={formData.password}
             name="password"
+            value={values.password}
+            onChange={handleChange}
           />
           {errors.password && (
             <p className="text-red-500 text-xs">{errors.password}</p>
           )}
+
           <Input
             label="Confirm Password"
             type="password"
             placeholder="••••••••"
-            onChange={handleChange}
-            value={formData.confirmPassword}
             name="confirmPassword"
+            value={values.confirmPassword}
+            onChange={handleChange}
           />
           {errors.confirmPassword && (
             <p className="text-red-500 text-xs">{errors.confirmPassword}</p>
@@ -106,14 +97,14 @@ function RegisterForm() {
             <div className="w-full border-t border-text/50"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-background text-text ">
+            <span className="px-2 bg-background text-text">
               Or continue with
             </span>
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <button className="flex items-center justify-center gap-2 px-4 py-2 border border-text/50 rounded-xl hover:bg-section transition-colors text-text font-medium">
+          <button className="flex items-center justify-center gap-2 px-4 py-2 border border-text/50 rounded-xl hover:bg-section">
             <img
               src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
               className="w-5 h-5"
@@ -121,7 +112,8 @@ function RegisterForm() {
             />
             Google
           </button>
-          <button className="flex items-center justify-center gap-2 px-4 py-2 border border-text/50 rounded-xl hover:bg-section transition-colors text-text font-medium">
+
+          <button className="flex items-center justify-center gap-2 px-4 py-2 border border-text/50 rounded-xl hover:bg-section">
             <Github size={20} />
             GitHub
           </button>
@@ -131,8 +123,8 @@ function RegisterForm() {
       <p className="mt-8 text-text/70">
         Already have an account?{" "}
         <NavLink
-          to={"/login"}
-          className="text-blue-500 font-semibold cursor-pointer hover:underline"
+          to="/login"
+          className="text-blue-500 font-semibold hover:underline"
         >
           Sign in
         </NavLink>
