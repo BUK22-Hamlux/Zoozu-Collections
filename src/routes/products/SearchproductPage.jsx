@@ -12,7 +12,8 @@ function SearchProductPage() {
   const filteredProducts = products.filter(
     (product) =>
       product.name.toLowerCase().includes(query) ||
-      product.category.toLowerCase().includes(query),
+      product.category.toLowerCase().includes(query) ||
+      product.description.toLowerCase().includes(query),
   );
 
   return (
@@ -30,7 +31,7 @@ function SearchProductPage() {
       {filteredProducts.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {filteredProducts.map((product) => (
-            <FeaturedProductCard key={product.id} {...product} />
+            <FeaturedProductCard key={product.id} product={product} />
           ))}
         </div>
       ) : (

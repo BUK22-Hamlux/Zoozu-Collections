@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 
 function HeroSection() {
   return (
-    <section className="relative min-h-screen w-full bg-hero bg-cover flex items-center">
+    <section className="relative min-h-dvh w-full bg-hero bg-cover flex items-center">
       <div className="absolute inset-0 bg-black/30 z-0" />
 
       <div className=" max-w-7xl relative flex flex-col items-center z-10 w-full container mx-auto px-6">
@@ -35,12 +35,6 @@ function HeroSection() {
             </NavLink>
           </div>
         </div>
-
-        {/* <img
-          src={images.heroImage}
-          alt="New Collection"
-          className="w-fit bg-gray-500 hidden lg:inline-block rounded-2xl h-auto object-contain drop-shadow-2xl"
-        /> */}
       </div>
     </section>
   );

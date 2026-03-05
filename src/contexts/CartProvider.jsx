@@ -16,11 +16,13 @@ export function CartProvider({ children }) {
 
   const addToCart = (product, quantity = 1) => {
     setCartItems((prev) => {
-      const existingItem = prev.find((item) => item.name === product.name);
+      const existingItem = prev.find(
+        (item) => String(item.id) === String(product.id),
+      );
       if (existingItem) {
         toast.success(`${quantity} more ${product.name} added!`);
         return prev.map((item) =>
-          item.name === product.name
+          item.id === product.id
             ? { ...item, quantity: item.quantity + quantity }
             : item,
         );

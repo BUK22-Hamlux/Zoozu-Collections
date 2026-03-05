@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Input from "../Common/Input";
 import { Github } from "lucide-react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../Common/Button";
 import useFormValidation from "../../hooks/useFormValidation";
 import { required, email, minLength } from "../../utils/validationRules";
@@ -63,7 +63,7 @@ function LoginForm() {
             <label className="flex gap-2 items-center">
               <input type="checkbox" className=""></input>Remember me
             </label>
-            <NavLink>Forgot Password?</NavLink>
+            <a href="#">Forgot Password?</a>
           </div>
           <Button
             text="Sign In"
@@ -101,12 +101,12 @@ function LoginForm() {
 
       <p className="mt-8 text-text/70">
         Don't have an account?{" "}
-        <NavLink
+        <Link
           to={"/register"}
           className="text-blue-500 font-semibold cursor-pointer hover:underline"
         >
           Sign up
-        </NavLink>
+        </Link>
       </p>
     </>
   );

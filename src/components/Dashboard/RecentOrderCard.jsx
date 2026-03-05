@@ -1,4 +1,5 @@
 import React from "react";
+import { formatCurrency } from "../../utils/formatCurrency";
 
 function RecentOrderCard({ id, date, status, items }) {
   const getStatusColor = (status) => {
@@ -27,7 +28,7 @@ function RecentOrderCard({ id, date, status, items }) {
               <p className="text-sm">{status}</p>
             </div>
             <h3 className="font-semibold">
-              {items.reduce((sum, item) => sum + item.price, 0)}
+              {items.reduce((sum, item) => sum + item.price * item.quantity, 0)}
             </h3>
           </div>
         </div>
@@ -36,7 +37,7 @@ function RecentOrderCard({ id, date, status, items }) {
             <p className="text-text/70 text-sm">
               {item.name} x {item.quantity}
             </p>
-            <p className="text-sm">{item.price}</p>
+            <p className="text-sm">{formatCurrency(item.price)}</p>
           </div>
         ))}
       </div>

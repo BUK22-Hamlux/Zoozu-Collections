@@ -5,7 +5,7 @@ const benefits = [
   {
     icon: <Truck className="w-6 h-6 text-blue-600" />,
     title: "Free Shipping",
-    description: "On orders over $50",
+    description: "On orders over ₦100000",
   },
   {
     icon: <ShieldCheck className="w-6 h-6 text-blue-600" />,

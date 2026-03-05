@@ -1,6 +1,8 @@
 import React from "react";
 import { useCart } from "../../contexts/CartContext";
 import { Box, Clock, ShoppingBagIcon } from "lucide-react";
+import Orders from "../../data/Orders";
+import { formatCurrency } from "../../utils/formatCurrency";
 
 function CartSummary() {
   const { totalCartCount, totalPrice } = useCart();
@@ -19,7 +21,9 @@ function CartSummary() {
       <div className="flex justify-between items-center p-6 bg-section rounded-lg">
         <div className="">
           <p className="text-text/50">Cart Total</p>
-          <h3 className="text-text font-bold text-4xl">₦{totalPrice}</h3>
+          <h3 className="text-text font-bold text-4xl">
+            {formatCurrency(totalPrice)}
+          </h3>
         </div>
         <div className="bg-green-500/10 p-2 rounded-lg">
           <Box className=" text-green-500" />
@@ -29,7 +33,7 @@ function CartSummary() {
       <div className="flex justify-between items-center p-6 bg-section rounded-lg">
         <div className="">
           <p className="text-text/50">Total Orders</p>
-          <h3 className="text-text font-bold text-4xl">{totalCartCount}</h3>
+          <h3 className="text-text font-bold text-4xl">{Orders.length}</h3>
         </div>
         <div className="bg-purple-500/10 p-2 rounded-lg">
           <Clock className=" text-purple-500" />

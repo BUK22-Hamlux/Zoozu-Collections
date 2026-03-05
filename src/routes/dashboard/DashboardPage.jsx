@@ -20,6 +20,7 @@ function Dashboard() {
         />
         <Button
           text="Continue Shopping"
+          onClick={() => navigate("/products")}
           optionalClassName="w-full border border-text/20 bg-background hover:bg-section"
         />
       </div>

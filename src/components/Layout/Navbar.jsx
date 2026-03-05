@@ -21,27 +21,26 @@ function Navbar() {
   const [theme, setTheme] = useState(
     localStorage.getItem("app-theme") || "light",
   );
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+
+    document.documentElement.setAttribute("data-theme", newTheme);
+
+    localStorage.setItem("app-theme", newTheme);
+  };
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const { totalCartCount } = useCart();
   const [openCartModal, setOpenCartModal] = useState(false);
 
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("app-theme", theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  };
-
   return (
     <nav className="sticky top-0 w-full z-50 bg-background border-b border-border-main flex items-center justify-between p-3 md:px-8 text-text">
       <div className="flex items-center gap-8">
         {loggedIn ? (
-          <NavLink to="/dashboard" className="" title="dashboard">
-            <LayoutDashboard />
+          <NavLink to="/dashboard" className="">
+            <img className="w-20 h-fit" src="/logo.png" />
           </NavLink>
         ) : (
           <NavLink to="/" className="">

@@ -12,7 +12,7 @@ export function AuthProvider({ children }) {
   };
 
   const login = (userData) => {
-    setUser({ email: userData.email, password: userData.password });
+    setUser({ email: userData.email });
     toast.success("Login successful");
     setLoggedIn(true);
   };

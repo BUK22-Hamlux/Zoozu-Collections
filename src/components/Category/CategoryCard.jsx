@@ -1,8 +1,8 @@
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function CategoryCard({ name, count, image }) {
   return (
-    <NavLink
+    <Link
       to={"/products"}
       state={{ category: name }}
       className="group relative h-80 w-full overflow-hidden rounded-2xl cursor-pointer shadow-md"
@@ -21,7 +21,7 @@ function CategoryCard({ name, count, image }) {
         </h3>
         <p className="mt-1 text-sm font-medium opacity-80">{count} products</p>
       </div>
-    </NavLink>
+    </Link>
   );
 }
 

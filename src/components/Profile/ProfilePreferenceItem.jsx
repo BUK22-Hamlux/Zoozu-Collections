@@ -1,6 +1,6 @@
 import React from "react";
 
-function ProfilePreferenceItem({ label, description, checked }) {
+function ProfilePreferenceItem({ label, description }) {
   return (
     <div>
       <div className="flex items-center justify-between py-3 border-b border-border-main last:border-0">
@@ -10,7 +10,6 @@ function ProfilePreferenceItem({ label, description, checked }) {
         </div>
         <input
           type="checkbox"
-          defaultChecked={checked}
           className="w-5 h-5 accent-primary cursor-pointer"
         />
       </div>

@@ -17,7 +17,7 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
   const navigate = useNavigate();
-  const product = products.find((p) => p.id === parseInt(id));
+  const product = products.find((p) => String(p.id) === id);
 
   if (!product) {
     return (
@@ -145,7 +145,7 @@ const ProductDetail = () => {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {relatedProducts.map((p) => (
-            <ProductCard key={p.id} {...p} />
+            <ProductCard key={p.id} product={p} />
           ))}
         </div>
       </section>

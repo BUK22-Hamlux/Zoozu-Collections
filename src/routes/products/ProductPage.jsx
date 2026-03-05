@@ -10,18 +10,14 @@ import { useCart } from "../../contexts/CartContext";
 function ProductPage() {
   const { addToCart } = useCart();
   const location = useLocation();
-  const [selectedCategory, setSelectedCategory] = useState("All Products");
+  const [selectedCategory, setSelectedCategory] = useState(
+    location.state?.category || "All Products",
+  );
   const [priceRange, setPriceRange] = useState("All Prices");
   const [sortBy, setSortBy] = useState("Featured");
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
   const categoryCounts = getCategoryCounts(products);
-
-  useEffect(() => {
-    if (location.state && location.state.category) {
-      setSelectedCategory(location.state.category);
-    }
-  }, [location.state]);
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
@@ -47,6 +43,8 @@ function ProductPage() {
       result.sort((a, b) => a.price - b.price);
     if (sortBy === "Price: High to Low")
       result.sort((a, b) => b.price - a.price);
+    if (sortBy === "Price: Highest Rated")
+      result.sort((a, b) => b.rating - a.rating);
 
     return result;
   }, [selectedCategory, priceRange, sortBy]);
@@ -98,7 +96,7 @@ function ProductPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
             {filteredProducts.map((product) => (
-              <ProductCard key={product.id} {...product} onClick={addToCart} />
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
 

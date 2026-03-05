@@ -10,7 +10,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2">
-              <img className="w-20 h-fit" src="../../../public/logo.png" />
+              <img className="w-20 h-fit" src="/logo.png" />
             </div>
             <p className="text-text/50 leading-relaxed max-w-xs">
               Your one-stop shop for all your needs. Quality Fashion wears.
@@ -90,7 +90,7 @@ function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-gray-100 text-center">
           <p className="text-gray-400 text-sm">
-            © {currentYear} ShopHub. All rights reserved.
+            © {currentYear} Zoozu. All rights reserved.
           </p>
         </div>
       </div>

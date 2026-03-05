@@ -4,7 +4,7 @@ import EmptyCart from "../../components/Cart/EmptyCart";
 import { useNavigate } from "react-router-dom";
 import ListItemsInCart from "../../components/Cart/CartItems";
 
-function CartPage(onClose) {
+function CartPage() {
   const navigate = useNavigate();
   const { totalCartCount } = useCart();
   return (

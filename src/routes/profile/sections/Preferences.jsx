@@ -9,17 +9,14 @@ function Preferences() {
         <ProfilePreferenceItem
           label="Email Notifications"
           description="Receive updates about your orders"
-          checked={true}
         />
         <ProfilePreferenceItem
           label="Marketing Emails"
           description="Receive promotional offers and news"
-          checked={false}
         />
         <ProfilePreferenceItem
           label="SMS Notifications"
           description="Get text updates for deliveries"
-          checked={true}
         />
       </ProfileCard>
     </div>
