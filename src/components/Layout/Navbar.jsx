@@ -1,15 +1,7 @@
 import { useState, useEffect } from "react";
 import Button from "../Common/Button";
 import SearchForm from "../Common/SearchForm";
-import {
-  X,
-  Menu,
-  Moon,
-  Sun,
-  ShoppingCart,
-  User,
-  LayoutDashboard,
-} from "lucide-react";
+import { X, Menu, Moon, Sun, ShoppingCart, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import { useCart } from "../../contexts/CartContext";
@@ -39,12 +31,24 @@ function Navbar() {
     <nav className="sticky top-0 w-full z-50 bg-background border-b border-border-main flex items-center justify-between p-3 md:px-8 text-text">
       <div className="flex items-center gap-8">
         {loggedIn ? (
-          <NavLink to="/dashboard" className="">
-            <img className="w-20 h-fit" src="/logo.png" />
+          <NavLink
+            to="/dashboard"
+            aria-label="Zoozu Collections – go to dashboard"
+          >
+            {/* alt="Zoozu Collections logo" describes the image for screen readers */}
+            <img
+              className="w-20 h-fit"
+              src="/logo.png"
+              alt="Zoozu Collections logo"
+            />
           </NavLink>
         ) : (
-          <NavLink to="/" className="">
-            <img className="w-20 h-fit" src="/logo.png" />
+          <NavLink to="/" aria-label="Zoozu Collections – go to home">
+            <img
+              className="w-20 h-fit"
+              src="/logo.png"
+              alt="Zoozu Collections logo"
+            />
           </NavLink>
         )}
 
@@ -70,21 +74,30 @@ function Navbar() {
 
       <div className="flex items-center gap-2 md:gap-4">
         <button
-          title="theme"
           onClick={toggleTheme}
           className="p-2 hover:bg-section rounded-full transition-colors text-text hidden md:inline-block"
-          aria-label="Toggle Theme"
+          // aria-label says what WILL happen after click, not the current state
+          aria-label={
+            theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+          }
         >
-          {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+          {theme === "dark" ? (
+            <Sun size={20} aria-hidden="true" />
+          ) : (
+            <Moon size={20} aria-hidden="true" />
+          )}
         </button>
 
         <button
           onClick={() => setOpenCartModal(true)}
-          title="cart"
           className="relative p-2 hover:bg-section rounded-full transition-colors cursor-pointer"
+          // aria-label announces item count to screen readers, not just "cart"
+          aria-label={`Open shopping cart${totalCartCount > 0 ? `, ${totalCartCount} item${totalCartCount > 1 ? "s" : ""}` : ""}`}
         >
-          <ShoppingCart size={20} />
+          {/* aria-hidden hides the icon from screen readers — the aria-label above covers it */}
+          <ShoppingCart size={20} aria-hidden="true" />
           <span
+            aria-hidden="true"
             className={`absolute ${totalCartCount <= 0 ? "hidden" : "flex"} top-0 right-0 bg-primary text-white text-[10px] font-bold px-1.5 rounded-full border-2 border-background`}
           >
             {totalCartCount}
@@ -94,11 +107,26 @@ function Navbar() {
         {openCartModal && <CartView onClose={() => setOpenCartModal(false)} />}
 
         {loggedIn ? (
-          <NavLink to={"profile"} className="block" title="profile">
-            <User />
-          </NavLink>
+          <div className="flex items-center gap-4">
+            <NavLink
+              to="profile"
+              className="block"
+              aria-label="Go to your profile"
+            >
+              <User aria-hidden="true" />
+            </NavLink>
+            <button
+              onClick={() => {
+                logout();
+                navigate("/login");
+              }}
+              className="hidden md:inline-flex px-4 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition-colors"
+            >
+              Logout
+            </button>
+          </div>
         ) : (
-          <NavLink to={"login"} className="hidden md:block">
+          <NavLink to="login" className="hidden md:block">
             <Button
               text="Sign In"
               type="primary"
@@ -107,12 +135,22 @@ function Navbar() {
           </NavLink>
         )}
 
-        {/* mobile view for navbar*/}
+        {/* aria-expanded tells screen readers whether the menu is open or closed */}
         <button
           onClick={toggleMenu}
           className="md:hidden p-2 hover:bg-section rounded-lg"
+          aria-label={
+            isMenuOpen ? "Close navigation menu" : "Open navigation menu"
+          }
+          aria-expanded={isMenuOpen}
+          aria-controls="mobile-menu"
         >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {/* aria-hidden because the label is on the button above */}
+          {isMenuOpen ? (
+            <X size={24} aria-hidden="true" />
+          ) : (
+            <Menu size={24} aria-hidden="true" />
+          )}
         </button>
       </div>
 
@@ -124,10 +162,16 @@ function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={toggleMenu}
+              // aria-hidden: this is a visual backdrop only — screen readers should ignore it
+              aria-hidden="true"
               className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 md:hidden"
             />
 
+            {/* id="mobile-menu" matches aria-controls on the toggle button above */}
             <motion.div
+              id="mobile-menu"
+              role="dialog"
+              aria-label="Navigation menu"
               initial={{ y: -20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -20, opacity: 0 }}
@@ -156,15 +200,19 @@ function Navbar() {
                 <button
                   onClick={toggleTheme}
                   className="p-3 hover:bg-section rounded-lg font-medium transition-colors text-text"
-                  aria-label="Toggle Theme"
+                  aria-label={
+                    theme === "dark"
+                      ? "Switch to light mode"
+                      : "Switch to dark mode"
+                  }
                 >
                   {theme === "dark" ? (
                     <div className="flex items-center gap-2">
-                      <Sun size={20} /> <p>Dark Mode</p>
+                      <Sun size={20} aria-hidden="true" /> <p>Dark Mode</p>
                     </div>
                   ) : (
                     <div className="flex items-center gap-2">
-                      <Moon size={20} /> <p>Light Mode</p>
+                      <Moon size={20} aria-hidden="true" /> <p>Light Mode</p>
                     </div>
                   )}
                 </button>

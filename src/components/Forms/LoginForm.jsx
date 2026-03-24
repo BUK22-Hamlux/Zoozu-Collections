@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import BouncingDots from "../Common/BouncingDots";
 import Input from "../Common/Input";
 import { Github } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,6 +11,8 @@ import { useAuth } from "../../contexts/AuthContext";
 function LoginForm() {
   const navigate = useNavigate();
   const { login } = useAuth();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const validationRules = {
     email: [required("Email"), email()],
@@ -24,13 +27,22 @@ function LoginForm() {
     validationRules,
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!validate()) return;
+    try {
+      setIsLoading(true);
+      await new Promise((resolve) => setTimeout(resolve, 1500));
 
-    login(values);
-    navigate("/dashboard");
+      const loginUser = login(values);
+      if (loginUser) {
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      console.error("Registration failed:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -61,13 +73,18 @@ function LoginForm() {
           )}
           <div className="flex justify-between text-sm items-center text-text">
             <label className="flex gap-2 items-center">
-              <input type="checkbox" className=""></input>Remember me
+              <input type="checkbox" /> Remember me
             </label>
             <a href="#">Forgot Password?</a>
           </div>
+
+          {/* Same fix as RegisterForm — htmlType="submit" required after the
+              Button accessibility update changed how the HTML type is set. */}
           <Button
-            text="Sign In"
+            disabled={isLoading}
+            text={isLoading ? <BouncingDots /> : "Sign In"}
             type="primary"
+            htmlType="submit"
             optionalClassName="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl"
           />
         </form>
@@ -77,14 +94,17 @@ function LoginForm() {
             <div className="w-full border-t border-text/50"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-background text-text ">
+            <span className="px-2 bg-background text-text">
               Or continue with
             </span>
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <button className="flex items-center justify-center gap-2 px-4 py-2 border border-text/50 rounded-xl hover:bg-section transition-colors text-text font-medium">
+          <button
+            type="button"
+            className="flex items-center justify-center gap-2 px-4 py-2 border border-text/50 rounded-xl hover:bg-section transition-colors text-text font-medium"
+          >
             <img
               src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
               className="w-5 h-5"
@@ -92,8 +112,11 @@ function LoginForm() {
             />
             Google
           </button>
-          <button className="flex items-center justify-center gap-2 px-4 py-2 border border-text/50 rounded-xl hover:bg-section transition-colors text-text font-medium">
-            <Github size={20} />
+          <button
+            type="button"
+            className="flex items-center justify-center gap-2 px-4 py-2 border border-text/50 rounded-xl hover:bg-section transition-colors text-text font-medium"
+          >
+            <Github size={20} aria-hidden="true" />
             GitHub
           </button>
         </div>
@@ -102,7 +125,7 @@ function LoginForm() {
       <p className="mt-8 text-text/70">
         Don't have an account?{" "}
         <Link
-          to={"/register"}
+          to="/register"
           className="text-blue-500 font-semibold cursor-pointer hover:underline"
         >
           Sign up

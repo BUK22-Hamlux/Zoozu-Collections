@@ -65,7 +65,7 @@ const ProductDetail = () => {
         <div className=" w-full h-fit rounded-2xl overflow-hidden bg-section">
           <img
             src={product.image}
-            alt={product.name}
+            alt={`${product.name} – ${product.category} clothing`}
             className="w-full h-full object-contain"
           />
         </div>
@@ -77,11 +77,17 @@ const ProductDetail = () => {
           <h1 className="text-4xl font-bold text-text mb-4">{product.name}</h1>
 
           <div className="flex items-center gap-4 mb-6">
-            <div className="text-yellow-400">
+            {/* aria-hidden on the icon — the text beside it already has the info */}
+            <div className="text-yellow-400" aria-hidden="true">
               <Star className="w-5 h-5" />
             </div>
             <span className="text-text/70 font-medium">
-              {product.rating} ({product.reviews} reviews)
+              {/* Explicit label so screen readers say "Rated 4.5 out of 5,
+                  1234 reviews" rather than "4.5 (1234 reviews)" */}
+              <span className="sr-only">Rated </span>
+              {product.rating}
+              <span className="sr-only"> out of 5.</span> ({product.reviews}{" "}
+              reviews)
             </span>
           </div>
 
@@ -97,13 +103,21 @@ const ProductDetail = () => {
           </div>
 
           <div className="flex flex-wrap items-center gap-6">
-            <div className="flex items-center border border-gray-200 rounded-xl px-4 py-2 bg-background">
-              <span className="mr-6 font-bold text-text/70">Quantity:</span>
+            <div
+              className="flex items-center border border-gray-200 rounded-xl px-4 py-2 bg-background"
+              // role="group" + aria-label groups the quantity controls together
+              role="group"
+              aria-label="Quantity selector"
+            >
+              <span className="mr-6 font-bold text-text/70" aria-hidden="true">
+                Quantity:
+              </span>
               <button
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                aria-label="Decrease quantity"
                 className="p-1 text-text hover:text-blue-600 transition-colors"
               >
-                <Minus size={18} />
+                <Minus size={18} aria-hidden="true" />
               </button>
 
               <input
@@ -113,14 +127,17 @@ const ProductDetail = () => {
                 onBlur={() => {
                   if (quantity === "" || quantity < 1) setQuantity(1);
                 }}
+                aria-label="Quantity"
+                min="1"
                 className="w-12 text-center font-bold text-lg text-text bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               />
 
               <button
                 onClick={() => setQuantity(Math.max(1, quantity + 1))}
+                aria-label="Increase quantity"
                 className="p-1 text-text hover:text-blue-600 transition-colors"
               >
-                <Plus size={18} />
+                <Plus size={18} aria-hidden="true" />
               </button>
             </div>
 
@@ -128,12 +145,16 @@ const ProductDetail = () => {
               onClick={() => addToCart(product, quantity)}
               className="flex-1 min-w-50 flex items-center justify-center gap-2 bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition-all active:scale-95 shadow-lg shadow-blue-200/10"
             >
-              <ShoppingCart size={20} />
+              <ShoppingCart size={20} aria-hidden="true" />
               Add to Cart
             </button>
 
-            <button className="p-4 border border-gray-200 rounded-xl hover:bg-section transition-colors text-text/70 hover:text-red-500">
-              <Heart size={24} />
+            {/* Wishlist button — must have aria-label since it's icon-only */}
+            <button
+              aria-label="Add to wishlist"
+              className="p-4 border border-gray-200 rounded-xl hover:bg-section transition-colors text-text/70 hover:text-red-500"
+            >
+              <Heart size={24} aria-hidden="true" />
             </button>
           </div>
         </div>

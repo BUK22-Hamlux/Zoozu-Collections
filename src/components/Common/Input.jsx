@@ -1,4 +1,3 @@
-// Input.jsx
 function Input({
   label,
   type = "text",
@@ -8,12 +7,19 @@ function Input({
   name,
   optionalClassName = "",
 }) {
+  // id links the <label> to the <input>. Without this, clicking the label
+  // text doesn't focus the input, and screen readers lose the association.
+  const inputId = name ? `input-${name}` : undefined;
+
   return (
     <div className="flex flex-col space-y-2 w-full">
       {label && (
-        <label className="text-sm font-semibold text-text">{label}</label>
+        <label htmlFor={inputId} className="text-sm font-semibold text-text">
+          {label}
+        </label>
       )}
       <input
+        id={inputId}
         type={type}
         name={name}
         placeholder={placeholder}

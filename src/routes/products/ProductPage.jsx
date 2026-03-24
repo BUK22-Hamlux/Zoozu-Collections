@@ -43,8 +43,7 @@ function ProductPage() {
       result.sort((a, b) => a.price - b.price);
     if (sortBy === "Price: High to Low")
       result.sort((a, b) => b.price - a.price);
-    if (sortBy === "Price: Highest Rated")
-      result.sort((a, b) => b.rating - a.rating);
+    if (sortBy === "Highest Rated") result.sort((a, b) => b.rating - a.rating);
 
     return result;
   }, [selectedCategory, priceRange, sortBy]);

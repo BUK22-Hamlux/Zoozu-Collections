@@ -1,13 +1,18 @@
+import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { Github } from "lucide-react";
 import Input from "../Common/Input";
 import Button from "../Common/Button";
-import { NavLink } from "react-router-dom";
+import BouncingDots from "../Common/BouncingDots";
+import { NavLink, useNavigate } from "react-router-dom";
 import { required, minLength, email, match } from "../../utils/validationRules";
 import useFormValidation from "../../hooks/useFormValidation";
 
 function RegisterForm() {
   const { register } = useAuth();
+  const navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const validationRules = {
     fullName: [required("Full name")],
@@ -26,12 +31,24 @@ function RegisterForm() {
     validationRules,
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validate()) return;
 
-    register(values);
+    try {
+      setIsLoading(true);
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      const registerUser = register(values);
+      if (registerUser) {
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      console.error("Registration failed:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -86,8 +103,10 @@ function RegisterForm() {
           )}
 
           <Button
-            text="Create Account"
+            htmlType="submit"
             type="primary"
+            disabled={isLoading}
+            text={isLoading ? <BouncingDots /> : "Create Account"}
             optionalClassName="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl"
           />
         </form>
@@ -104,7 +123,10 @@ function RegisterForm() {
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <button className="flex items-center justify-center gap-2 px-4 py-2 border border-text/50 rounded-xl hover:bg-section">
+          <button
+            type="button"
+            className="flex items-center justify-center gap-2 px-4 py-2 border border-text/50 rounded-xl hover:bg-section"
+          >
             <img
               src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
               className="w-5 h-5"
@@ -113,8 +135,11 @@ function RegisterForm() {
             Google
           </button>
 
-          <button className="flex items-center justify-center gap-2 px-4 py-2 border border-text/50 rounded-xl hover:bg-section">
-            <Github size={20} />
+          <button
+            type="button"
+            className="flex items-center justify-center gap-2 px-4 py-2 border border-text/50 rounded-xl hover:bg-section"
+          >
+            <Github size={20} aria-hidden="true" />
             GitHub
           </button>
         </div>

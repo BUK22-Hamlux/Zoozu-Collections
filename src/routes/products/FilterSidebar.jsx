@@ -1,4 +1,3 @@
-import React from "react";
 import { SlidersHorizontal } from "lucide-react";
 
 const FilterSidebar = ({
@@ -11,20 +10,20 @@ const FilterSidebar = ({
   const categoriesList = ["All Products", ...Object.keys(categoryCounts)];
   const priceOptions = [
     "All Prices",
-    "Under #50,000",
-    "#50,000 - #100,000",
-    "Over #100,000",
+    "Under ₦50,000",
+    "₦50,000 - ₦100,000",
+    "Over ₦100,000",
   ];
 
   return (
     <div className="bg-section border border-gray-100 rounded-xl p-6 shadow-sm sticky top-24">
       <div className="flex items-center gap-2 mb-6 font-bold text-text">
-        <SlidersHorizontal size={18} /> Filters
+        {/* aria-hidden on the icon because "Filters" text already labels this section */}
+        <SlidersHorizontal size={18} aria-hidden="true" /> Filters
       </div>
 
-      {/* Category Section */}
-      <div className="mb-8">
-        <h4 className="font-semibold mb-4 text-text">Category</h4>
+      <fieldset className="mb-8 border-0 p-0 m-0">
+        <legend className="font-semibold mb-4 text-text">Category</legend>
         <div className="space-y-3">
           {categoriesList.map((cat) => (
             <label key={cat} className="flex items-center group cursor-pointer">
@@ -44,11 +43,10 @@ const FilterSidebar = ({
             </label>
           ))}
         </div>
-      </div>
+      </fieldset>
 
-      {/* Price Section */}
-      <div>
-        <h4 className="font-semibold mb-4 text-text">Price Range</h4>
+      <fieldset className="border-0 p-0 m-0">
+        <legend className="font-semibold mb-4 text-text">Price Range</legend>
         <div className="space-y-3">
           {priceOptions.map((range) => (
             <label
@@ -70,7 +68,7 @@ const FilterSidebar = ({
             </label>
           ))}
         </div>
-      </div>
+      </fieldset>
     </div>
   );
 };

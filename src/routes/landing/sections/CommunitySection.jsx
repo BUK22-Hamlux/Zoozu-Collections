@@ -1,7 +1,12 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../../contexts/AuthContext";
 
 function CommunitySection() {
+  const { loggedIn } = useAuth();
+
+  if (loggedIn) return null;
+
   return (
     <section className="py-16 px-4">
       <div className="max-w-6xl mx-auto">
@@ -19,7 +24,7 @@ function CommunitySection() {
               className="inline-flex items-center gap-2 bg-white text-blue-600 px-8 py-4 rounded-xl font-bold text-lg transition-all hover:bg-blue-50 hover:shadow-lg active:scale-95"
             >
               Get Started
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-5 h-5" aria-hidden="true" />
             </Link>
           </div>
         </div>

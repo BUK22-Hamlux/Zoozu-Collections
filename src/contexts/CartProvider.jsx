@@ -1,9 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CartContext } from "./CartContext";
 import toast from "react-hot-toast";
+import saveCartToStorage from "../storage/saveCartToStorage";
+import readCartFromStorage from "../storage/readCartFromStorage";
+
+const CART_KEY = "zoozu-cart-items";
 
 export function CartProvider({ children }) {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(() =>
+    readCartFromStorage(CART_KEY),
+  );
+
+  useEffect(() => {
+    saveCartToStorage(cartItems, CART_KEY);
+  }, [cartItems]);
 
   const totalCartCount = cartItems.reduce(
     (sum, item) => sum + item.quantity,
@@ -22,7 +32,7 @@ export function CartProvider({ children }) {
       if (existingItem) {
         toast.success(`${quantity} more ${product.name} added!`);
         return prev.map((item) =>
-          item.id === product.id
+          String(item.id) === String(product.id)
             ? { ...item, quantity: item.quantity + quantity }
             : item,
         );
@@ -45,7 +55,7 @@ export function CartProvider({ children }) {
   const increaseQuantity = (product) => {
     setCartItems((prev) =>
       prev.map((item) =>
-        item.name === product.name
+        item.id === product.id
           ? { ...item, quantity: item.quantity + 1 }
           : item,
       ),
@@ -54,7 +64,7 @@ export function CartProvider({ children }) {
 
   const decreaseQuantity = (product) => {
     setCartItems((prev) => {
-      const existingItem = prev.find((item) => item.name === product.name);
+      const existingItem = prev.find((item) => item.id === product.id);
 
       if (existingItem && existingItem.quantity === 1) {
         toast.error(`${product.name} removed from cart`);
@@ -70,6 +80,10 @@ export function CartProvider({ children }) {
     });
   };
 
+  const clearCart = () => {
+    setCartItems([]);
+  };
+
   const value = {
     cartItems,
     totalCartCount,
@@ -78,6 +92,7 @@ export function CartProvider({ children }) {
     removeFromCart,
     increaseQuantity,
     decreaseQuantity,
+    clearCart,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

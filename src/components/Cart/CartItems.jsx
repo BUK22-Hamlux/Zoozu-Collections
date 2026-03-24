@@ -25,30 +25,58 @@ function ListItemsInCart({ onClose }) {
               <img
                 src={item.image}
                 alt={item.name}
+                // loading="lazy" — don't download off-screen cart images immediately
+                loading="lazy"
                 className="w-20 h-20 object-cover rounded-md"
               />
               <div>
                 <p className="font-medium text-text">{item.name}</p>
                 <p className="text-text/70">{formatCurrency(item.price)}</p>
-                <div className="flex items-center text-gray-700 space-x-6 mt-4">
-                  <Minus
-                    size={20}
+
+                {/* Quantity controls — each must be a real <button>.
+                    Raw SVG icons with onClick are not focusable by keyboard
+                    and are invisible to screen readers.
+                    aria-label describes the action + which product it targets. */}
+                <div className="flex items-center space-x-3 mt-4">
+                  <button
                     onClick={() => decreaseQuantity(item)}
-                    className="cursor-pointer text-text/70 hover:text-text"
-                  />
-                  <span className="text-lg text-text/70">{item.quantity}</span>
-                  <Plus
-                    size={20}
+                    aria-label={`Decrease quantity of ${item.name}`}
+                    className="p-1 rounded hover:bg-background text-text/70 hover:text-text transition-colors"
+                  >
+                    <Minus size={20} aria-hidden="true" />
+                  </button>
+
+                  {/* aria-live="polite" announces quantity changes to screen readers */}
+                  <span
+                    className="text-lg text-text/70 min-w-6 text-center"
+                    aria-live="polite"
+                    aria-label={`Quantity: ${item.quantity}`}
+                  >
+                    {item.quantity}
+                  </span>
+
+                  <button
                     onClick={() => increaseQuantity(item)}
-                    className="cursor-pointer text-text/70 hover:text-text"
-                  />
+                    aria-label={`Increase quantity of ${item.name}`}
+                    className="p-1 rounded hover:bg-background text-text/70 hover:text-text transition-colors"
+                  >
+                    <Plus size={20} aria-hidden="true" />
+                  </button>
                 </div>
               </div>
             </div>
-            <Trash2
+
+            {/* Remove button — must be a <button>, not a raw icon with onClick */}
+            <button
               onClick={() => removeFromCart(item.id)}
-              className="text-red-500 cursor-pointer hover:scale-110 transition-transform"
-            />
+              aria-label={`Remove ${item.name} from cart`}
+              className="p-1 rounded hover:bg-background transition-colors"
+            >
+              <Trash2
+                className="text-red-500 hover:scale-110 transition-transform"
+                aria-hidden="true"
+              />
+            </button>
           </div>
         ))}
       </div>

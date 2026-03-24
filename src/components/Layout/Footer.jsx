@@ -1,4 +1,4 @@
-import React from "react";
+import { NavLink } from "react-router-dom";
 import { Facebook, Twitter, Instagram, Github } from "lucide-react";
 
 function Footer() {
@@ -10,16 +10,65 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2">
-              <img className="w-20 h-fit" src="/logo.png" />
+              {/* alt text describes the image — never leave it empty or missing */}
+              <img
+                className="w-20 h-fit"
+                src="/logo.png"
+                alt="Zoozu Collections logo"
+              />
             </div>
             <p className="text-text/50 leading-relaxed max-w-xs">
               Your one-stop shop for all your needs. Quality Fashion wears.
             </p>
-            <div className="flex gap-5 text-tex/50">
-              <Facebook className="w-5 h-5 cursor-pointer hover:text-blue-600 transition-colors" />
-              <Twitter className="w-5 h-5 cursor-pointer hover:text-blue-400 transition-colors" />
-              <Instagram className="w-5 h-5 cursor-pointer hover:text-pink-600 transition-colors" />
-              <Github className="w-5 h-5 cursor-pointer hover:text-text transition-colors" />
+
+            {/* Social icons: each is a real <a> link with aria-label.
+                Without aria-label, screen readers announce "link" with no context.
+                aria-hidden on the icon itself because the label covers it. */}
+            <div className="flex gap-5">
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit our Facebook page"
+              >
+                <Facebook
+                  className="w-5 h-5 cursor-pointer hover:text-blue-600 transition-colors"
+                  aria-hidden="true"
+                />
+              </a>
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit our Twitter page"
+              >
+                <Twitter
+                  className="w-5 h-5 cursor-pointer hover:text-blue-400 transition-colors"
+                  aria-hidden="true"
+                />
+              </a>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit our Instagram page"
+              >
+                <Instagram
+                  className="w-5 h-5 cursor-pointer hover:text-pink-600 transition-colors"
+                  aria-hidden="true"
+                />
+              </a>
+              <a
+                href="https://github.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit our GitHub page"
+              >
+                <Github
+                  className="w-5 h-5 cursor-pointer hover:text-text transition-colors"
+                  aria-hidden="true"
+                />
+              </a>
             </div>
           </div>
 
@@ -27,18 +76,41 @@ function Footer() {
             <h4 className="font-bold text-text mb-6 uppercase tracking-wider text-sm">
               Shop
             </h4>
+            {/* Real NavLinks instead of dead <li> elements.
+                Previously these were <li> with cursor-pointer — they looked
+                clickable but did absolutely nothing when clicked. */}
             <ul className="flex flex-col gap-3 text-text/50">
-              <li className="hover:text-blue-600 cursor-pointer transition-colors">
-                All Products
+              <li>
+                <NavLink
+                  to="/products"
+                  className="hover:text-blue-600 transition-colors"
+                >
+                  All Products
+                </NavLink>
               </li>
-              <li className="hover:text-blue-600 cursor-pointer transition-colors">
-                Categories
+              <li>
+                <NavLink
+                  to="/categories"
+                  className="hover:text-blue-600 transition-colors"
+                >
+                  Categories
+                </NavLink>
               </li>
-              <li className="hover:text-blue-600 cursor-pointer transition-colors">
-                New Arrivals
+              <li>
+                <NavLink
+                  to="/products"
+                  className="hover:text-blue-600 transition-colors"
+                >
+                  New Arrivals
+                </NavLink>
               </li>
-              <li className="hover:text-blue-600 cursor-pointer transition-colors">
-                Best Sellers
+              <li>
+                <NavLink
+                  to="/products"
+                  className="hover:text-blue-600 transition-colors"
+                >
+                  Best Sellers
+                </NavLink>
               </li>
             </ul>
           </div>
@@ -48,17 +120,37 @@ function Footer() {
               Customer Service
             </h4>
             <ul className="flex flex-col gap-3 text-text/50">
-              <li className="hover:text-blue-600 cursor-pointer transition-colors">
-                Contact Us
+              <li>
+                <NavLink
+                  to="/contact"
+                  className="hover:text-blue-600 transition-colors"
+                >
+                  Contact Us
+                </NavLink>
               </li>
-              <li className="hover:text-blue-600 cursor-pointer transition-colors">
-                Shipping Info
+              <li>
+                <NavLink
+                  to="/shipping"
+                  className="hover:text-blue-600 transition-colors"
+                >
+                  Shipping Info
+                </NavLink>
               </li>
-              <li className="hover:text-blue-600 cursor-pointer transition-colors">
-                Returns
+              <li>
+                <NavLink
+                  to="/returns"
+                  className="hover:text-blue-600 transition-colors"
+                >
+                  Returns
+                </NavLink>
               </li>
-              <li className="hover:text-blue-600 cursor-pointer transition-colors">
-                FAQ
+              <li>
+                <NavLink
+                  to="/faq"
+                  className="hover:text-blue-600 transition-colors"
+                >
+                  FAQ
+                </NavLink>
               </li>
             </ul>
           </div>
@@ -75,12 +167,22 @@ function Footer() {
               className="flex flex-col gap-3"
               onSubmit={(e) => e.preventDefault()}
             >
+              {/* Every input needs a <label>. Without it, screen readers
+                  announce "edit text" with no hint of what to type.
+                  htmlFor must match the input's id. */}
+              <label htmlFor="newsletter-email" className="sr-only">
+                Email address for newsletter
+              </label>
               <input
+                id="newsletter-email"
                 type="email"
                 placeholder="Your email"
                 className="w-full text-text px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
-              <button className="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition-all active:scale-[0.98]">
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition-all active:scale-[0.98]"
+              >
                 Subscribe
               </button>
             </form>

@@ -19,6 +19,7 @@ import Dashboard from "./routes/dashboard/DashboardPage";
 import CartPage from "./routes/cart/CartPage";
 import SearchproductPage from "./routes/products/SearchproductPage";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import PublicRoute from "./routes/PublicRoute";
 import ProfilePage from "./routes/profile/ProfilePage";
 import CheckoutPage from "./routes/checkout/CheckoutPage";
 import Shipping from "./routes/checkout/sections/Shipping";
@@ -34,9 +35,12 @@ function App() {
         <Route path="products" element={<ProductPage />} />
         <Route path="products/:id" element={<ProductDetail />} />
         <Route path="categories" element={<CategoriesPage />} />
-        <Route path="register" element={<RegisterPage />} />
-        <Route path="login" element={<LoginPage />} />
         <Route path="product" element={<SearchproductPage />} />
+
+        <Route element={<PublicRoute />}>
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="login" element={<LoginPage />} />
+        </Route>
 
         <Route element={<ProtectedRoute />}>
           <Route path="dashboard" element={<Dashboard />} />
