@@ -17,7 +17,7 @@ import {
 import { Toaster } from "react-hot-toast";
 import Dashboard from "./routes/dashboard/DashboardPage";
 import CartPage from "./routes/cart/CartPage";
-import SearchproductPage from "./routes/products/SearchProductPage";
+import SearchProductPage from "./routes/products/SearchProductPage";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
 import ProfilePage from "./routes/profile/ProfilePage";
@@ -35,7 +35,7 @@ const router = createBrowserRouter(
       <Route path="products" element={<ProductPage />} />
       <Route path="products/:id" element={<ProductDetail />} />
       <Route path="categories" element={<CategoriesPage />} />
-      <Route path="product" element={<SearchproductPage />} />
+      <Route path="product" element={<SearchProductPage />} />
 
       <Route element={<PublicRoute />}>
         <Route path="register" element={<RegisterPage />} />
