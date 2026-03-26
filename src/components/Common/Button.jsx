@@ -1,6 +1,6 @@
 function Button({
   text,
-  icon: Icon, // 1. Rename 'icon' to 'Icon' (Capitalized)
+  icon: Icon,
   onClick,
   type,
   optionalClassName,

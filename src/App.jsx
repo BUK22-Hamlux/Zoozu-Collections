@@ -22,7 +22,7 @@ import CheckoutPage from "./routes/checkout/CheckoutPage";
 import Shipping from "./routes/checkout/sections/Shipping";
 import Payment from "./routes/checkout/sections/Payment";
 import Review from "./routes/checkout/sections/Review";
-import NotFound from "./routes/notFound/NotFound";
+import NotFound from "./routes/NotFound";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,7 +32,6 @@ const router = createBrowserRouter(
       <Route path="products/:id" element={<ProductDetail />} />
       <Route path="categories" element={<CategoriesPage />} />
       <Route path="product" element={<SearchProductPage />} />
-      <Route path="*" element={<NotFound />} />
 
       <Route element={<PublicRoute />}>
         <Route path="register" element={<RegisterPage />} />
@@ -51,6 +50,8 @@ const router = createBrowserRouter(
           <Route path="review" element={<Review />} />
         </Route>
       </Route>
+
+      <Route path="*" element={<NotFound />} />
     </Route>,
   ),
 );

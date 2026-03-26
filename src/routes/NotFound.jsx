@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { FileQuestion, Home, ArrowLeft } from "lucide-react";
-import Button from "../../components/Common/Button";
+import Button from "../components/Common/Button";
+
 function NotFound() {
   const navigate = useNavigate();
 
