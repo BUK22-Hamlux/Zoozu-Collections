@@ -36,18 +36,18 @@ function Shipping() {
     );
 
   useEffect(() => {
-    if (personalInfo) {
-      setFormValues({
+    // Priority: if we already have shipping info, use that.
+    // Otherwise, pre-fill with personal info from the account.
+    if (shippingInfo && shippingInfo.address) {
+      setFormValues(shippingInfo);
+    } else if (personalInfo) {
+      setFormValues((prev) => ({
+        ...prev,
         fullName: personalInfo.fullName || "",
         email: personalInfo.email || "",
-      });
+      }));
     }
-  }, []);
-  useEffect(() => {
-    if (shippingInfo) {
-      setFormValues(shippingInfo);
-    }
-  }, [shippingInfo]);
+  }, [personalInfo, shippingInfo, setFormValues]);
 
   const handleContinue = (e) => {
     e.preventDefault();
