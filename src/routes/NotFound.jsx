@@ -9,7 +9,6 @@ function NotFound() {
   return (
     <div className="min-h-[80vh] flex items-center justify-center px-4">
       <div className="max-w-md w-full text-center">
-        {/* Animated Icon */}
         <motion.div
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
@@ -19,7 +18,6 @@ function NotFound() {
           <FileQuestion size={64} strokeWidth={1.5} />
         </motion.div>
 
-        {/* Error Text */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
