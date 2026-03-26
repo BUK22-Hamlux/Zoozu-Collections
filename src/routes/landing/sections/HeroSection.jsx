@@ -21,7 +21,7 @@ function HeroSection() {
             <NavLink to="/products">
               <Button
                 text="Shop Now"
-                icon={<ArrowRight aria-hidden="true" />}
+                icon={ArrowRight}
                 type="primary"
                 optionalClassName="flex items-center justify-center gap-2"
               />
