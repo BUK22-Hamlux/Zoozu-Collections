@@ -4,9 +4,7 @@ import CategoriesPage from "./routes/categories/CategoriesPage";
 import RegisterPage from "./routes/auth/RegisterPage";
 import LoginPage from "./routes/auth/LoginPage";
 import ProductDetail from "./routes/products/ProductDetailedPage";
-import RootLayout from "./components/Layout/RootLayout";
-import { CartProvider } from "./contexts/CartProvider";
-import { AuthProvider } from "./contexts/AuthProvider";
+import AppProvider from "./AppProvider";
 import {
   Route,
   createRoutesFromElements,
@@ -14,7 +12,6 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
 import Dashboard from "./routes/dashboard/DashboardPage";
 import CartPage from "./routes/cart/CartPage";
 import SearchProductPage from "./routes/products/SearchProductPage";
@@ -25,12 +22,10 @@ import CheckoutPage from "./routes/checkout/CheckoutPage";
 import Shipping from "./routes/checkout/sections/Shipping";
 import Payment from "./routes/checkout/sections/Payment";
 import Review from "./routes/checkout/sections/Review";
-import { InfoProvider } from "./contexts/InfoProvider";
-import { OrdersProvider } from "./contexts/OrdersProvider";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<RootLayout />}>
+    <Route path="/" element={<AppProvider />}>
       <Route index element={<LandingPage />} />
       <Route path="products" element={<ProductPage />} />
       <Route path="products/:id" element={<ProductDetail />} />
@@ -59,18 +54,7 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  return (
-    <AuthProvider>
-      <InfoProvider>
-        <OrdersProvider>
-          <CartProvider>
-            <Toaster position="top-center" reverseOrder={false} />
-            <RouterProvider router={router} />
-          </CartProvider>
-        </OrdersProvider>
-      </InfoProvider>
-    </AuthProvider>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

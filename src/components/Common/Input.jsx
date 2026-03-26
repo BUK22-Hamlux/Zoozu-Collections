@@ -10,6 +10,7 @@ function Input({
   inputMode,
   inputId,
   maxLength,
+  optionalClassName,
 }) {
   return (
     <div>
@@ -34,7 +35,7 @@ function Input({
           inputMode={inputMode}
           aria-invalid={!!error}
           aria-describedby={error ? `${inputId}-error` : undefined}
-          className="w-full px-4 py-3 rounded-lg bg-background border border-border-main text-text placeholder-secondary focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+          className={`w-full px-4 py-3 rounded-lg bg-background border border-border-main text-text placeholder-secondary focus:outline-none focus:ring-2 focus:ring-primary transition-all ${optionalClassName}`}
         />
       </div>
       {error && (

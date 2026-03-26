@@ -25,20 +25,25 @@ export function CartProvider({ children }) {
   );
 
   const addToCart = (product, quantity = 1) => {
+    const existingItem = cartItems.find(
+      (item) => String(item.id) === String(product.id),
+    );
+
+    if (existingItem) {
+      toast.success(`${quantity} more ${product.name} added!`);
+    } else {
+      toast.success(`${product.name} added to cart!`);
+    }
+
     setCartItems((prev) => {
-      const existingItem = prev.find(
-        (item) => String(item.id) === String(product.id),
-      );
       if (existingItem) {
-        toast.success(`${quantity} more ${product.name} added!`);
         return prev.map((item) =>
           String(item.id) === String(product.id)
             ? { ...item, quantity: item.quantity + quantity }
             : item,
         );
       }
-      toast.success(`${product.name} added to cart!`);
-      return [...prev, { ...product, quantity: quantity }]; // Start with the chosen amount
+      return [...prev, { ...product, quantity: quantity }];
     });
   };
 
