@@ -1,4 +1,3 @@
-import React from "react";
 import { formatCurrency } from "../../utils/formatCurrency";
 
 function RecentOrderCard({ id, date, status, items }) {
@@ -28,7 +27,12 @@ function RecentOrderCard({ id, date, status, items }) {
               <p className="text-sm">{status}</p>
             </div>
             <h3 className="font-semibold">
-              {items.reduce((sum, item) => sum + item.price * item.quantity, 0)}
+              {formatCurrency(
+                items.reduce(
+                  (sum, item) => sum + item.price * item.quantity,
+                  0,
+                ),
+              )}
             </h3>
           </div>
         </div>

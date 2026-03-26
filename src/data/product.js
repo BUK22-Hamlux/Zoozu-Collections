@@ -4,7 +4,7 @@ export const products = [
     name: "Royal Agbada",
     category: "Agbada/Babariga",
     price: 85000,
-    image: "/products/agbada1.jpg",
+    image: "/products/agbada1.webp",
     description:
       "Experience the epitome of elegance with our Royal Agbada, a masterpiece of traditional craftsmanship. This regal ensemble features intricate embroidery and luxurious fabric, designed to make you stand out at any special occasion. Perfect for weddings, cultural events, or formal gatherings, the Royal Agbada combines timeless style with modern sophistication.",
     inStock: true,
@@ -16,7 +16,7 @@ export const products = [
     name: "Elegant Abaya",
     category: "Hijab & Abaya",
     price: 35000,
-    image: "/products/abaya1.jpg",
+    image: "/products/abaya1.webp",
     description:
       "Our Elegant Abaya is a blend of modesty and style, crafted from high-quality fabric with delicate detailing. This versatile piece is perfect for both everyday wear and special occasions, offering comfort without compromising on elegance. Whether you're attending a formal event or simply want to elevate your daily look, the Elegant Abaya is a must-have addition to your wardrobe.",
     inStock: true,
@@ -28,7 +28,7 @@ export const products = [
     name: "Modern Fusion Wear",
     category: "Modern/Fusion",
     price: 42000,
-    image: "/products/fusion1.jpg",
+    image: "/products/fusion1.webp",
     description:
       "Discover the perfect blend of traditional and contemporary fashion with our Modern Fusion Wear. This unique collection features innovative designs that incorporate classic elements with a modern twist, making it ideal for fashion-forward individuals. Whether you're attending a cultural event or looking for a standout piece for a night out, our Modern Fusion Wear offers versatility and style in one stunning package.",
     inStock: true,
@@ -40,7 +40,7 @@ export const products = [
     name: "Aso Ebi Party Style",
     category: "Aso Ebi",
     price: 50000,
-    image: "/products/asoebi1.jpg",
+    image: "/products/asoebi1.webp",
     description:
       "Make a statement at your next event with our Aso Ebi Party Style collection. Designed for those who love to celebrate in style, these vibrant and intricately designed outfits are perfect for weddings, parties, and special occasions. Crafted from premium fabrics and adorned with exquisite details, the Aso Ebi Party Style ensures you look and feel your best while honoring tradition.",
     inStock: true,
@@ -52,7 +52,7 @@ export const products = [
     name: "Classic Babariga",
     category: "Agbada/Babariga",
     price: 72000,
-    image: "/products/agbada2.jpg",
+    image: "/products/agbada2.webp",
     description:
       "The Classic Babariga is a timeless piece that embodies traditional elegance. This sophisticated ensemble is crafted with attention to detail, featuring rich fabrics and classic styling that make it a perfect choice for formal events and cultural celebrations.",
     inStock: true,
@@ -64,7 +64,7 @@ export const products = [
     name: "Luxury Senator Set",
     category: "Senator Wear",
     price: 52000,
-    image: "/products/senator2.jpg",
+    image: "/products/senator2.webp",
     description:
       "Our Luxury Senator Set is designed for the modern gentleman who appreciates refined style. This set includes a tailored top and matching trousers, crafted from premium materials to ensure comfort and durability. Perfect for formal occasions or stylish everyday wear, the Luxury Senator Set offers a sophisticated look that stands out.",
     inStock: true,
@@ -76,7 +76,7 @@ export const products = [
     name: "Arabic Kaftan",
     category: "Kaftan/Thobe",
     price: 30000,
-    image: "/products/kaftan1.jpg",
+    image: "/products/kaftan1.webp",
     description:
       "Embrace the timeless elegance of our Arabic Kaftan, a versatile piece that combines comfort with style. Crafted from high-quality fabric and adorned with intricate patterns, this kaftan is perfect for both casual outings and special occasions. Whether you're attending a cultural event or simply want to add a touch of sophistication to your wardrobe, the Arabic Kaftan is an excellent choice.",
     inStock: true,
@@ -88,7 +88,7 @@ export const products = [
     name: "Premium Thobe",
     category: "Kaftan/Thobe",
     price: 38000,
-    image: "/products/kaftan2.jpg",
+    image: "/products/kaftan2.webp",
     description:
       "Our Premium Thobe is a blend of traditional design and modern comfort. Made from soft, breathable fabric, this thobe features subtle embroidery and a sleek silhouette, making it ideal for both everyday wear and special occasions. Whether you're attending a religious event or simply want to elevate your daily attire, the Premium Thobe offers a stylish and comfortable option.",
     inStock: true,
@@ -100,7 +100,7 @@ export const products = [
     name: "Premium Hijab Set",
     category: "Hijab & Abaya",
     price: 15000,
-    image: "/products/hijab1.jpg",
+    image: "/products/hijab1.webp",
     description:
       "Our Premium Hijab Set includes a beautifully designed hijab and matching accessories, crafted from high-quality materials for maximum comfort and style. This set is perfect for everyday wear or special occasions, offering a versatile and elegant solution for your modest fashion needs. Whether you're looking to enhance your daily look or need a stylish option for an event, the Premium Hijab Set has you covered.",
     inStock: true,
@@ -112,7 +112,7 @@ export const products = [
     name: "George Lace Top",
     category: "George/Lace Material Tops",
     price: 25000,
-    image: "/products/george1.jpg",
+    image: "/products/george1.webp",
     description:
       "Our Premium George Lace Top is a stylish and elegant piece that combines comfort with sophistication. Made from high-quality lace fabric, this top features intricate detailing and a flattering silhouette that enhances your natural beauty. Perfect for both casual wear and special occasions, the Premium George Lace Top is a must-have in any fashion-forward wardrobe.",
     inStock: true,
@@ -124,7 +124,7 @@ export const products = [
     name: "Traditional George Wrapper",
     category: "George Wrapper",
     price: 60000,
-    image: "/products/george2.jpg",
+    image: "/products/george2.webp",
     description:
       "Our Traditional George Wrapper is a classic choice for those who appreciate timeless elegance. This wrapper is made from premium fabric and features traditional patterns that reflect cultural heritage. Ideal for formal events and special occasions, the Traditional George Wrapper offers a sophisticated and modest look that is both comfortable and stylish.",
     inStock: true,
@@ -136,7 +136,7 @@ export const products = [
     name: "Ankara Gown",
     category: "Ankara Styles",
     price: 28000,
-    image: "/products/ankara1.jpg",
+    image: "/products/ankara1.webp",
     description:
       "Our Ankara Gown is a vibrant and stylish piece that celebrates African culture. Made from high-quality Ankara fabric, this gown features bold patterns and a flattering silhouette that makes it perfect for both casual and formal occasions. Whether you're attending a wedding, party, or cultural event, the Ankara Gown is sure to make you stand out with its unique design and vibrant colors.",
     inStock: true,
@@ -148,7 +148,7 @@ export const products = [
     name: "Ankara Two Piece",
     category: "Ankara Styles",
     price: 32000,
-    image: "/products/ankara2.jpg",
+    image: "/products/ankara2.webp",
     description:
       "Our Ankara Two Piece set is a stylish and versatile outfit that combines traditional African fabric with modern design. This set includes a top and matching skirt, both crafted from vibrant Ankara fabric that features bold patterns and colors. Perfect for weddings, parties, or cultural events, the Ankara Two Piece allows you to express your unique style while celebrating your heritage.",
     inStock: true,
@@ -160,7 +160,7 @@ export const products = [
     name: "Modern Senator Wear",
     category: "Senator Wear",
     price: 45000,
-    image: "/products/senator1.jpg",
+    image: "/products/senator1.webp",
     description:
       "Our Modern Senator Wear is a sophisticated and elegant choice for formal occasions. This stylish outfit combines classic design with contemporary flair, featuring high-quality materials and a tailored fit that enhances your natural silhouette. Perfect for business meetings, formal events, or any occasion where you want to make a lasting impression, the Modern Senator Wear is a timeless addition to any wardrobe.",
     inStock: true,
@@ -172,7 +172,7 @@ export const products = [
     name: "Luxury Khimar",
     category: "Khimar/Chador",
     price: 22000,
-    image: "/products/khimar1.jpg",
+    image: "/products/khimar1.webp",
     description:
       "Our Luxury Khimar is a beautiful and modest piece designed for those who value both style and comfort. Made from soft, high-quality fabric, this khimar features elegant draping and subtle detailing that adds a touch of sophistication to your look. Whether you're attending a religious event or simply want to enhance your daily attire, the Luxury Khimar offers a stylish and comfortable option for modest fashion.",
     inStock: true,
@@ -184,7 +184,7 @@ export const products = [
     name: "Premium Aso Ebi Lace",
     category: "Aso Ebi",
     price: 70000,
-    image: "/products/asoebi2.jpg",
+    image: "/products/asoebi2.webp",
     description:
       "Our Premium Aso Ebi Lace collection is designed for those who want to make a statement at their next event. These vibrant and intricately designed outfits are perfect for weddings, parties, and special occasions. Crafted from premium lace fabric and adorned with exquisite details, the Premium Aso Ebi Lace ensures you look and feel your best while honoring tradition.",
     inStock: true,

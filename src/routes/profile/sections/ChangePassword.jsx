@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ProfileCard from "../../../components/Profile/ProfileCard";
-import ProfileInput from "../../../components/Profile/ProfileInput";
+import Input from "../../../components/Common/Input";
 import Button from "../../../components/Common/Button";
 import { Lock } from "lucide-react";
 import toast from "react-hot-toast";
@@ -53,7 +53,7 @@ function ChangePassword() {
   return (
     <ProfileCard title="Change Password">
       <form onSubmit={handleSubmit} className="space-y-4">
-        <ProfileInput
+        <Input
           name="currentPassword"
           label="Current Password"
           icon={Lock}
@@ -64,7 +64,7 @@ function ChangePassword() {
           error={errors.currentPassword}
         />
 
-        <ProfileInput
+        <Input
           name="newPassword"
           label="New Password"
           icon={Lock}
@@ -75,7 +75,7 @@ function ChangePassword() {
           error={errors.newPassword}
         />
 
-        <ProfileInput
+        <Input
           name="confirmPassword"
           label="Confirm New Password"
           icon={Lock}

@@ -2,46 +2,46 @@ export const categories = [
   {
     id: "agbada",
     name: "Agbada/Babariga",
-    image: "/categories/agbada.jpg",
+    image: "/categories/agbada.webp",
   },
   {
     id: "senator",
     name: "Senator Wear",
-    image: "/categories/senator.jpg",
+    image: "/categories/senator.webp",
   },
   {
     id: "kaftan",
     name: "Kaftan/Thobe",
-    image: "/categories/khaftan.jpg",
+    image: "/categories/khaftan.webp",
   },
   {
     id: "george",
     name: "George/Lace Material Tops",
-    image: "/categories/george.jpg",
+    image: "/categories/george.webp",
   },
   {
     id: "wrapper",
     name: "George Wrapper",
-    image: "/categories/wrapper.jpg",
+    image: "/categories/wrapper.webp",
   },
   {
     id: "ankara",
     name: "Ankara Styles",
-    image: "/categories/ankara.jpg",
+    image: "/categories/ankara.webp",
   },
   {
     id: "hijab",
     name: "Hijab & Abaya",
-    image: "/categories/hijab.jpg",
+    image: "/categories/hijab.webp",
   },
   {
     id: "asoebi",
     name: "Aso Ebi",
-    image: "/categories/asoebi.jpg",
+    image: "/categories/asoebi.webp",
   },
   {
     id: "fusion",
     name: "Modern/Fusion",
-    image: "/categories/fusion.jpg",
+    image: "/categories/fusion.webp",
   },
 ];

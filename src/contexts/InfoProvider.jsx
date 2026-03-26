@@ -10,6 +10,12 @@ export function InfoProvider({ children }) {
     fullName: "",
     email: "",
   });
+  const [paymentInfo, setPaymentInfo] = useState({
+    cardNumber: "",
+    cardName: "",
+    expiryDate: "",
+    cvv: "",
+  });
   const [passwords, setPasswords] = useState({
     currentPassword: "",
     newPassword: "",
@@ -65,6 +71,8 @@ export function InfoProvider({ children }) {
         errors,
         shippingInfo,
         setShippingInfo,
+        paymentInfo,
+        setPaymentInfo,
       }}
     >
       {children}

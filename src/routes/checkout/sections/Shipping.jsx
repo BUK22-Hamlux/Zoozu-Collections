@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { MapPin, Mail, User, Phone } from "lucide-react";
 import { useEffect, useState } from "react";
-import ProfileInput from "../../../components/Profile/ProfileInput";
+import Input from "../../../components/Common/Input";
 import Button from "../../../components/Common/Button";
 import { useInfo } from "../../../contexts/InfoContext";
 import useFormValidation from "../../../hooks/useFormValidation";
@@ -68,16 +68,17 @@ function Shipping() {
 
       <form onSubmit={handleContinue} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <ProfileInput
+          <Input
             name="fullName"
             label="Full Name *"
+            type="text"
             icon={User}
             value={values.fullName}
             onChange={handleChange}
             error={errors.fullName}
           />
 
-          <ProfileInput
+          <Input
             name="email"
             label="Email Address *"
             type="email"
@@ -88,7 +89,7 @@ function Shipping() {
           />
         </div>
 
-        <ProfileInput
+        <Input
           name="phone"
           label="Phone Number *"
           icon={Phone}
@@ -97,7 +98,7 @@ function Shipping() {
           error={errors.phone}
         />
 
-        <ProfileInput
+        <Input
           name="address"
           label="Street Address *"
           icon={MapPin}
@@ -107,21 +108,21 @@ function Shipping() {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <ProfileInput
+          <Input
             name="city"
             label="City *"
             value={values.city}
             onChange={handleChange}
             error={errors.city}
           />
-          <ProfileInput
+          <Input
             name="state"
             label="State *"
             value={values.state}
             onChange={handleChange}
             error={errors.state}
           />
-          <ProfileInput
+          <Input
             name="zip"
             label="ZIP Code *"
             value={values.zip}
@@ -133,6 +134,7 @@ function Shipping() {
         <Button
           text="Continue to Payment"
           type="primary"
+          htmlType="submit"
           optionalClassName="w-full py-4 text-lg font-semibold mt-4"
         />
       </form>

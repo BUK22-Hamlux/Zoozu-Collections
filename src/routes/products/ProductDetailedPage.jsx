@@ -66,6 +66,8 @@ const ProductDetail = () => {
           <img
             src={product.image}
             alt={`${product.name} – ${product.category} clothing`}
+            width={736}
+            height={1104}
             className="w-full h-full object-contain"
           />
         </div>
@@ -77,13 +79,10 @@ const ProductDetail = () => {
           <h1 className="text-4xl font-bold text-text mb-4">{product.name}</h1>
 
           <div className="flex items-center gap-4 mb-6">
-            {/* aria-hidden on the icon — the text beside it already has the info */}
             <div className="text-yellow-400" aria-hidden="true">
               <Star className="w-5 h-5" />
             </div>
             <span className="text-text/70 font-medium">
-              {/* Explicit label so screen readers say "Rated 4.5 out of 5,
-                  1234 reviews" rather than "4.5 (1234 reviews)" */}
               <span className="sr-only">Rated </span>
               {product.rating}
               <span className="sr-only"> out of 5.</span> ({product.reviews}{" "}
@@ -105,7 +104,6 @@ const ProductDetail = () => {
           <div className="flex flex-wrap items-center gap-6">
             <div
               className="flex items-center border border-gray-200 rounded-xl px-4 py-2 bg-background"
-              // role="group" + aria-label groups the quantity controls together
               role="group"
               aria-label="Quantity selector"
             >
@@ -149,7 +147,6 @@ const ProductDetail = () => {
               Add to Cart
             </button>
 
-            {/* Wishlist button — must have aria-label since it's icon-only */}
             <button
               aria-label="Add to wishlist"
               className="p-4 border border-gray-200 rounded-xl hover:bg-section transition-colors text-text/70 hover:text-red-500"

@@ -1,7 +1,7 @@
 import { Trash2, Minus, Plus } from "lucide-react";
 import { useCart } from "../../contexts/CartContext";
 import { formatCurrency } from "../../utils/formatCurrency";
-import CartFooter from "./cartFooter";
+import CartFooter from "./CartFooter";
 
 function ListItemsInCart({ onClose }) {
   const {
@@ -25,7 +25,8 @@ function ListItemsInCart({ onClose }) {
               <img
                 src={item.image}
                 alt={item.name}
-                // loading="lazy" — don't download off-screen cart images immediately
+                width={80}
+                height={80}
                 loading="lazy"
                 className="w-20 h-20 object-cover rounded-md"
               />
@@ -33,10 +34,6 @@ function ListItemsInCart({ onClose }) {
                 <p className="font-medium text-text">{item.name}</p>
                 <p className="text-text/70">{formatCurrency(item.price)}</p>
 
-                {/* Quantity controls — each must be a real <button>.
-                    Raw SVG icons with onClick are not focusable by keyboard
-                    and are invisible to screen readers.
-                    aria-label describes the action + which product it targets. */}
                 <div className="flex items-center space-x-3 mt-4">
                   <button
                     onClick={() => decreaseQuantity(item)}
@@ -66,7 +63,6 @@ function ListItemsInCart({ onClose }) {
               </div>
             </div>
 
-            {/* Remove button — must be a <button>, not a raw icon with onClick */}
             <button
               onClick={() => removeFromCart(item.id)}
               aria-label={`Remove ${item.name} from cart`}

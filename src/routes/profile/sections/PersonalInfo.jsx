@@ -3,7 +3,7 @@ import { User, Mail } from "lucide-react";
 import toast from "react-hot-toast";
 import { useInfo } from "../../../contexts/InfoContext";
 import Button from "../../../components/Common/Button";
-import ProfileInput from "../../../components/Profile/ProfileInput";
+import Input from "../../../components/Common/Input";
 import ProfileCard from "../../../components/Profile/ProfileCard";
 
 function PersonalInfo() {
@@ -38,7 +38,7 @@ function PersonalInfo() {
     <div>
       <ProfileCard title="Personal Information">
         <form onSubmit={handleProfileInfoUpdate} className="space-y-4">
-          <ProfileInput
+          <Input
             label="Full Name"
             placeholder="Your Name"
             icon={User}
@@ -46,7 +46,7 @@ function PersonalInfo() {
             onChange={handleProfileInfo("fullName")}
           />
 
-          <ProfileInput
+          <Input
             label="Email Address"
             placeholder="Your Email"
             icon={Mail}

@@ -27,15 +27,8 @@ function CartView({ onClose }) {
 
   return (
     <div className="fixed inset-0 h-screen z-51 flex justify-end">
-      {/* aria-hidden on the overlay — it's visual only */}
       <Overlay onClose={onClose} aria-hidden="true" />
 
-      {/*
-        role="dialog" tells screen readers this is a modal dialog.
-        aria-modal="true" tells them to ignore content behind the overlay.
-        aria-labelledby points to the <h2> heading inside — that becomes
-        the dialog's announced name, e.g. "Shopping Cart, dialog".
-      */}
       <div
         role="dialog"
         aria-modal="true"
@@ -48,8 +41,6 @@ function CartView({ onClose }) {
             Shopping Cart
           </h2>
 
-          {/* The close button must be a real <button> with a clear aria-label.
-              "X" alone means nothing to a screen reader. */}
           <button
             ref={closeButtonRef}
             onClick={onClose}

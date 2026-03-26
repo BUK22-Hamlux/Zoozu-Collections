@@ -1,6 +1,6 @@
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import { ChevronLeft, Truck, CreditCard, CheckCircle } from "lucide-react";
-import CheckoutSteps from "../../components/checkout/CheckoutSteps";
+import CheckoutSteps from "../../components/Checkout/CheckoutSteps";
 
 function CheckoutPage() {
   const { pathname } = useLocation();

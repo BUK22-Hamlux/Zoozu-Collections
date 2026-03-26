@@ -5,8 +5,6 @@ import { ArrowRight } from "lucide-react";
 function HeroSection() {
   return (
     <section className="relative min-h-dvh w-full bg-hero bg-cover flex items-center">
-      {/* aria-hidden on decorative overlays — screen readers don't need to
-          know about a visual darkening div */}
       <div className="absolute inset-0 bg-black/30 z-0" aria-hidden="true" />
 
       <div className="max-w-7xl relative flex flex-col items-center z-10 w-full container mx-auto px-6">

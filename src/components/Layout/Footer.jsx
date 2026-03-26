@@ -10,10 +10,12 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2">
-              {/* alt text describes the image — never leave it empty or missing */}
               <img
                 className="w-20 h-fit"
                 src="/logo.png"
+                loading="lazy"
+                width={80}
+                height={27}
                 alt="Zoozu Collections logo"
               />
             </div>
@@ -21,9 +23,6 @@ function Footer() {
               Your one-stop shop for all your needs. Quality Fashion wears.
             </p>
 
-            {/* Social icons: each is a real <a> link with aria-label.
-                Without aria-label, screen readers announce "link" with no context.
-                aria-hidden on the icon itself because the label covers it. */}
             <div className="flex gap-5">
               <a
                 href="https://facebook.com"
@@ -76,9 +75,7 @@ function Footer() {
             <h4 className="font-bold text-text mb-6 uppercase tracking-wider text-sm">
               Shop
             </h4>
-            {/* Real NavLinks instead of dead <li> elements.
-                Previously these were <li> with cursor-pointer — they looked
-                clickable but did absolutely nothing when clicked. */}
+
             <ul className="flex flex-col gap-3 text-text/50">
               <li>
                 <NavLink
@@ -167,9 +164,6 @@ function Footer() {
               className="flex flex-col gap-3"
               onSubmit={(e) => e.preventDefault()}
             >
-              {/* Every input needs a <label>. Without it, screen readers
-                  announce "edit text" with no hint of what to type.
-                  htmlFor must match the input's id. */}
               <label htmlFor="newsletter-email" className="sr-only">
                 Email address for newsletter
               </label>
@@ -189,7 +183,6 @@ function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar */}
         <div className="pt-8 border-t border-gray-100 text-center">
           <p className="text-gray-400 text-sm">
             © {currentYear} Zoozu. All rights reserved.

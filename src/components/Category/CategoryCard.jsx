@@ -10,6 +10,9 @@ function CategoryCard({ name, count, image }) {
       <img
         src={image}
         alt={name}
+        loading="lazy"
+        width={400}
+        height={320}
         className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
       />
 

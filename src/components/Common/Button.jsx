@@ -21,8 +21,6 @@ function Button({
       } ${disabled ? "opacity-50 cursor-not-allowed" : ""} ${optionalClassName}`}
     >
       {text}
-      {/* aria-hidden on icons inside buttons — the button text already
-          describes the action; the icon is decorative */}
       {icon && <span aria-hidden="true">{icon}</span>}
     </button>
   );
