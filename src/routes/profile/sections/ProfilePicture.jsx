@@ -1,10 +1,11 @@
 import { useRef } from "react";
 import ProfileCard from "../../../components/Profile/ProfileCard";
 import { useInfo } from "../../../contexts/InfoContext";
+import { useAuth } from "../../../contexts/AuthContext";
 
 function ProfilePicture() {
-  const { handleImageChange, profileImage, isUploadingImage, personalInfo } =
-    useInfo();
+  const { user } = useAuth();
+  const { handleImageChange, profileImage, isUploadingImage } = useInfo();
   const fileInputRef = useRef(null);
 
   return (
@@ -14,18 +15,13 @@ function ProfilePicture() {
           <div className="relative">
             <img
               src={profileImage}
-              // Dynamic alt: uses the user's name if available, falls back to "Your profile picture".
-              // alt="Profile" is too vague — screen readers announce it as just "Profile, image".
               alt={
-                personalInfo?.fullName
-                  ? `${personalInfo.fullName}'s profile picture`
+                user?.fullName
+                  ? `${user.fullName}'s profile picture`
                   : "Your profile picture"
               }
               className="w-24 h-24 rounded-full object-cover border-2 border-border-main"
             />
-            {/* The file input is hidden visually but must have an accessible label
-                so assistive tech can identify it if it somehow gets focused.
-                The visible button below is what users actually interact with. */}
             <input
               type="file"
               ref={fileInputRef}

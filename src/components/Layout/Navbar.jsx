@@ -145,7 +145,6 @@ function Navbar() {
           aria-expanded={isMenuOpen}
           aria-controls="mobile-menu"
         >
-          {/* aria-hidden because the label is on the button above */}
           {isMenuOpen ? (
             <X size={24} aria-hidden="true" />
           ) : (

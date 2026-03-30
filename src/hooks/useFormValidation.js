@@ -86,6 +86,7 @@ function useFormValidation(initialValues = {}, validationRules = {}) {
   return {
     values,
     errors,
+    setErrors,
     handleChange,
     validate,
     setValue,

@@ -1,27 +1,30 @@
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { products } from "../../data/product";
 import FeaturedProductCard from "../../components/Products/FeaturedProductCard";
-import { SearchX, ArrowLeft } from "lucide-react";
+import { SearchX } from "lucide-react";
 import Button from "../../components/Common/Button";
 
 function SearchProductPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const query = searchParams.get("search")?.toLowerCase() || "";
+  const query = searchParams.get("search")?.toLowerCase().trim() || "";
 
-  const filteredProducts = products.filter(
-    (product) =>
-      product.name.toLowerCase().includes(query) ||
-      product.category.toLowerCase().includes(query) ||
-      product.description.toLowerCase().includes(query),
-  );
+  const filteredProducts = query
+    ? products.filter(
+        (p) =>
+          p.name.toLowerCase().includes(query) ||
+          p.category.toLowerCase().includes(query) ||
+          p.description.toLowerCase().includes(query),
+      )
+    : products;
 
   return (
     <div className="max-w-7xl mx-auto p-6 min-h-screen">
+      {/* Header */}
       <div className="mb-8 border-b border-border-main pb-4">
-        <h2 className="font-bold text-2xl text-text">
-          {query ? `Search results for: "${query}"` : "Our Collection"}
-        </h2>
+        <h1 className="font-bold text-2xl text-text">
+          {query ? `Results for "${query}"` : "All Products"}
+        </h1>
         <p className="text-secondary mt-1">
           {filteredProducts.length} product
           {filteredProducts.length !== 1 ? "s" : ""} found
@@ -37,28 +40,33 @@ function SearchProductPage() {
       ) : (
         <div className="flex flex-col items-center justify-center py-20 px-4 text-center">
           <div className="bg-section p-6 rounded-full mb-6">
-            <SearchX size={64} className="text-secondary opacity-50" />
+            <SearchX
+              size={64}
+              className="text-secondary opacity-50"
+              aria-hidden="true"
+            />
           </div>
-          <h3 className="text-2xl font-bold text-text mb-2">
+          <h2 className="text-2xl font-bold text-text mb-2">
             No matches found
-          </h3>
+          </h2>
           <p className="text-secondary max-w-md mb-8">
-            We couldn't find anything matching{" "}
-            <span className="font-semibold text-text">"{query}"</span>. Try
-            checking your spelling or using more general terms.
+            Nothing matched{" "}
+            <span className="font-semibold text-text">"{query}"</span>. Try a
+            different term or browse all products.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Button
-              text="Clear Search"
+              text="Browse All Products"
+              type="primary"
+              htmlType="button"
               onClick={() => navigate("/products")}
-              optionalClassName="px-8 bg-background hover:bg-section border border-text/10"
+              optionalClassName="px-8"
             />
             <Button
-              text="Go Back "
-              icon={<ArrowLeft />}
+              text="Go Back"
+              htmlType="button"
               onClick={() => navigate(-1)}
-              type="primary"
-              optionalClassName="px-8 flex flex-row-reverse gap-2"
+              optionalClassName="px-8 border border-text/20 hover:bg-section"
             />
           </div>
         </div>

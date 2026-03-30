@@ -1,24 +1,33 @@
 import { useState, useEffect } from "react";
 import { OrdersContext } from "./OrdersContext";
-import { readOrdersFromStorage, ORDERS_KEY } from "../storage/orderStorage";
+import { useAuth } from "./AuthContext";
+import { readOrdersFromStorage } from "../storage/orderStorage";
 
 export function OrdersProvider({ children }) {
-  const [orders, setOrders] = useState(() => readOrdersFromStorage());
+  const { user } = useAuth();
 
-  // Sync to localStorage on every change
+  const getOrdersKey = () =>
+    user ? `zoozu-orders-${user.email}` : "zoozu-guest-orders";
+
+  const [orders, setOrders] = useState([]);
+
   useEffect(() => {
-    localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
-  }, [orders]);
+    const currentKey = getOrdersKey();
+    const savedOrders = readOrdersFromStorage(currentKey); // Now passing the key as an argument
+    setOrders(savedOrders);
+  }, [user]);
+
+  useEffect(() => {
+    const currentKey = getOrdersKey();
+    localStorage.setItem(currentKey, JSON.stringify(orders));
+  }, [orders, user]);
 
   const addOrder = ({ cartItems, totalPrice, shippingInfo }) => {
     const now = new Date();
-
-    // Generate a unique order ID using the current timestamp
     const orderId = `ORD-${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}-${Date.now().toString().slice(-4)}`;
 
     const newOrder = {
       id: orderId,
-      // toISOString().split("T")[0] gives "2026-03-25" format
       date: now.toISOString().split("T")[0],
       total: totalPrice,
       status: "processing",
