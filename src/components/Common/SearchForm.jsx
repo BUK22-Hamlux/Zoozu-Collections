@@ -21,10 +21,9 @@ function SearchForm({
   // Debounce the query — only filter after user pauses typing for 300ms
   const debouncedQuery = useDebounce(query, 300);
 
-  // Filter products using the debounced value (not the raw query)
   const results =
     debouncedQuery.trim().length < 2
-      ? [] // don't search for single characters
+      ? []
       : products.filter((p) => {
           const q = debouncedQuery.toLowerCase();
           return (
@@ -38,7 +37,6 @@ function SearchForm({
   const displayResults = results.slice(0, MAX_DROPDOWN_RESULTS);
   const hasMoreResults = totalMatches > MAX_DROPDOWN_RESULTS;
 
-  // Show dropdown when there's a debounced query
   useEffect(() => {
     setIsOpen(debouncedQuery.trim().length >= 2);
   }, [debouncedQuery]);

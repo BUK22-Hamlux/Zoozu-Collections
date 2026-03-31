@@ -1,51 +1,57 @@
 import { formatCurrency } from "../../utils/formatCurrency";
 
-function RecentOrderCard({ id, date, status, items }) {
-  const getStatusColor = (status) => {
-    switch (status) {
-      case "delivered":
-        return "text-green-600 bg-green-600/10";
-      case "shipped":
-        return "text-blue-600 bg-blue-600/10 ";
-      case "processing":
-        return "text-yellow-600 bg-yellow-600/10";
-      default:
-        return "text-gray-600 bg-gray-600/10";
-    }
-  };
+// Status badge colours
+const STATUS_STYLES = {
+  delivered:  "text-green-700  bg-green-50  border border-green-200",
+  shipped:    "text-blue-700   bg-blue-50   border border-blue-200",
+  processing: "text-yellow-700 bg-yellow-50 border border-yellow-200",
+  cancelled:  "text-red-700    bg-red-50    border border-red-200",
+};
+
+// Capitalise the first letter for display
+const formatStatus = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+
+function RecentOrderCard({ id, date, status, items, total }) {
+  const badgeClass = STATUS_STYLES[status] || "text-gray-600 bg-gray-50 border border-gray-200";
+
+  // Format date from "2026-03-25" to "Mar 25, 2026"
+  const formattedDate = new Date(date + "T00:00:00").toLocaleDateString("en-NG", {
+    year: "numeric", month: "short", day: "numeric",
+  });
 
   return (
-    <div>
-      <div className="border-t border-t-text/10 p-6">
-        <div className="flex flex-col sm:flex-row justify-between gap-2 items-start mb-4">
-          <div>
-            <h2 className="font-semibold text-lg">Order #{id}</h2>
-            <p className="text-text/70 text-sm">Placed on {date}</p>
-          </div>
-          <div className="flex gap-4 items-center">
-            <div className={`h-fit px-4 rounded-2xl ${getStatusColor(status)}`}>
-              <p className="text-sm">{status}</p>
-            </div>
-            <h3 className="font-semibold">
-              {formatCurrency(
-                items.reduce(
-                  (sum, item) => sum + item.price * item.quantity,
-                  0,
-                ),
-              )}
-            </h3>
-          </div>
+    <article className="border-t border-text/10 px-6 py-5">
+      {/* Order header row */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+        <div>
+          <p className="font-semibold text-text text-sm">Order {id}</p>
+          <p className="text-text/60 text-xs mt-0.5">Placed on {formattedDate}</p>
         </div>
-        {items.map((item) => (
-          <div key={item.name} className="flex justify-between mb-2">
+        <div className="flex items-center gap-3">
+          {/* Status badge */}
+          <span className={`text-xs font-semibold px-3 py-1 rounded-full ${badgeClass}`}>
+            {formatStatus(status)}
+          </span>
+          {/* Order total */}
+          <span className="font-bold text-text text-sm">
+            {formatCurrency(total ?? items.reduce((s, i) => s + i.price * i.quantity, 0))}
+          </span>
+        </div>
+      </div>
+
+      {/* Items list */}
+      <div className="space-y-2">
+        {items.map((item, idx) => (
+          <div key={`${item.name}-${idx}`} className="flex justify-between items-center">
             <p className="text-text/70 text-sm">
-              {item.name} x {item.quantity}
+              {item.name}
+              <span className="text-text/40 ml-1">×{item.quantity}</span>
             </p>
-            <p className="text-sm">{formatCurrency(item.price)}</p>
+            <p className="text-text/70 text-sm">{formatCurrency(item.price)}</p>
           </div>
         ))}
       </div>
-    </div>
+    </article>
   );
 }
 

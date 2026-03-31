@@ -13,6 +13,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import Dashboard from "./routes/dashboard/DashboardPage";
+import OrderHistoryPage from "./routes/orders/OrderHistoryPage";
 import CartPage from "./routes/cart/CartPage";
 import SearchProductPage from "./routes/products/SearchProductPage";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -23,6 +24,10 @@ import Shipping from "./routes/checkout/sections/Shipping";
 import Payment from "./routes/checkout/sections/Payment";
 import Review from "./routes/checkout/sections/Review";
 import NotFound from "./routes/NotFound";
+import ContactPage from "./routes/support/ContactPage";
+import ShippingInfoPage from "./routes/support/ShippingInfoPage";
+import ReturnsPage from "./routes/support/ReturnsPage";
+import FAQPage from "./routes/support/FAQPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,6 +37,10 @@ const router = createBrowserRouter(
       <Route path="products/:id" element={<ProductDetail />} />
       <Route path="categories" element={<CategoriesPage />} />
       <Route path="product" element={<SearchProductPage />} />
+      <Route path="contact" element={<ContactPage />} />
+      <Route path="shipping" element={<ShippingInfoPage />} />
+      <Route path="returns" element={<ReturnsPage />} />
+      <Route path="faq" element={<FAQPage />} />
 
       <Route element={<PublicRoute />}>
         <Route path="register" element={<RegisterPage />} />
@@ -42,6 +51,7 @@ const router = createBrowserRouter(
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="cart" element={<CartPage />} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="orders" element={<OrderHistoryPage />} />
 
         <Route path="checkout" element={<CheckoutPage />}>
           <Route index element={<Navigate to="shipping" replace />} />

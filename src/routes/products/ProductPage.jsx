@@ -47,7 +47,7 @@ function ProductPage() {
     return result;
   }, [selectedCategory, priceRange, sortBy]);
 
-  // Pagination calculations
+  // pagination for my products page
   const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
   const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
   const endIndex = startIndex + PRODUCTS_PER_PAGE;
@@ -55,11 +55,8 @@ function ProductPage() {
 
   const goToPage = (page) => {
     setCurrentPage(page);
-    // Scroll to top of product grid when changing pages
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Build the page number list — shows max 5 buttons with ellipsis
   const getPageNumbers = () => {
     if (totalPages <= 5) {
       return Array.from({ length: totalPages }, (_, i) => i + 1);
