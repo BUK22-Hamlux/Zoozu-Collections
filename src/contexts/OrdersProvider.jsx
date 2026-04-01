@@ -1,46 +1,48 @@
 import { useState, useEffect } from "react";
 import { OrdersContext } from "./OrdersContext";
 import { useAuth } from "./AuthContext";
-import { readOrdersFromStorage } from "../storage/orderStorage";
+import { getUserOrders, saveUserOrders } from "../storage/userStorage";
 
 export function OrdersProvider({ children }) {
   const { user } = useAuth();
 
-  const getOrdersKey = () =>
-    user ? `zoozu-orders-${user.email}` : "zoozu-guest-orders";
+  // Load orders for the currently logged-in user.
+  // When a different user logs in, their orders load automatically.
+  const [orders, setOrders] = useState(() =>
+    user ? getUserOrders(user.email) : [],
+  );
 
-  const [orders, setOrders] = useState([]);
-
+  // Reload when user changes (login/logout/switch)
   useEffect(() => {
-    const currentKey = getOrdersKey();
-    const savedOrders = readOrdersFromStorage(currentKey); // Now passing the key as an argument
-    setOrders(savedOrders);
-  }, [user]);
+    setOrders(user ? getUserOrders(user.email) : []);
+  }, [user?.email]);
 
+  // Persist back into the user's record on every change
   useEffect(() => {
-    const currentKey = getOrdersKey();
-    localStorage.setItem(currentKey, JSON.stringify(orders));
-  }, [orders, user]);
+    if (user?.email) {
+      saveUserOrders(user.email, orders);
+    }
+  }, [orders, user?.email]);
 
   const addOrder = ({ cartItems, totalPrice, shippingInfo }) => {
     const now = new Date();
-    const orderId = `ORD-${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}-${Date.now().toString().slice(-4)}`;
+    const id = `ORD-${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}-${Date.now().toString().slice(-4)}`;
 
     const newOrder = {
-      id: orderId,
+      id,
       date: now.toISOString().split("T")[0],
       total: totalPrice,
       status: "processing",
       shippingAddress: shippingInfo,
-      items: cartItems.map((item) => ({
-        name: item.name,
-        quantity: item.quantity,
-        price: item.price,
+      items: cartItems.map(({ name, quantity, price }) => ({
+        name,
+        quantity,
+        price,
       })),
     };
 
+    // Newest order appears first
     setOrders((prev) => [newOrder, ...prev]);
-
     return newOrder;
   };
 

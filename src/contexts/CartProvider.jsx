@@ -2,27 +2,28 @@ import { useState, useEffect } from "react";
 import { CartContext } from "./CartContext";
 import { useAuth } from "./AuthContext";
 import toast from "react-hot-toast";
-import saveCartToStorage from "../storage/saveCartToStorage";
-import readCartFromStorage from "../storage/readCartFromStorage";
+import { getUserCart, saveUserCart } from "../storage/userStorage";
 
 export function CartProvider({ children }) {
   const { user } = useAuth();
 
-  const getCartKey = () =>
-    user ? `zoozu-cart-${user.email}` : "zoozu-guest-cart";
+  // When the logged-in user changes (login/logout), reload the cart
+  // from that user's record in the users list.
+  const [cartItems, setCartItems] = useState(() =>
+    user ? getUserCart(user.email) : [],
+  );
 
-  const [cartItems, setCartItems] = useState([]);
-
+  // Reload cart when user changes (different user logs in)
   useEffect(() => {
-    const currentKey = getCartKey();
-    const savedData = readCartFromStorage(currentKey);
-    setCartItems(savedData);
-  }, [user]);
+    setCartItems(user ? getUserCart(user.email) : []);
+  }, [user?.email]);
 
+  // Persist cart into the user's record on every change
   useEffect(() => {
-    const currentKey = getCartKey();
-    saveCartToStorage(cartItems, currentKey);
-  }, [cartItems, user]);
+    if (user?.email) {
+      saveUserCart(user.email, cartItems);
+    }
+  }, [cartItems, user?.email]);
 
   const totalCartCount = cartItems.reduce(
     (sum, item) => sum + item.quantity,
@@ -34,71 +35,63 @@ export function CartProvider({ children }) {
   );
 
   const addToCart = (product, quantity = 1) => {
+    const exists = cartItems.find((i) => String(i.id) === String(product.id));
+    if (exists) toast.success(`${quantity} more ${product.name} added!`);
+    else toast.success(`${product.name} added to cart!`);
+
     setCartItems((prev) => {
-      const existingItem = prev.find(
-        (item) => String(item.id) === String(product.id),
-      );
-      if (existingItem) {
-        toast.success(`${quantity} more ${product.name} added!`);
-        return prev.map((item) =>
-          String(item.id) === String(product.id)
-            ? { ...item, quantity: item.quantity + quantity }
-            : item,
+      if (exists) {
+        return prev.map((i) =>
+          String(i.id) === String(product.id)
+            ? { ...i, quantity: i.quantity + quantity }
+            : i,
         );
       }
-      toast.success(`${product.name} added to cart!`);
       return [...prev, { ...product, quantity }];
     });
   };
 
-  const removeFromCart = (idToRemove) => {
-    const itemToRemove = cartItems.find((item) => item.id === idToRemove);
-    if (itemToRemove) toast.error(`${itemToRemove.name} removed from cart`);
-    setCartItems((prev) => prev.filter((item) => item.id !== idToRemove));
+  const removeFromCart = (id) => {
+    const item = cartItems.find((i) => i.id === id);
+    if (item) toast.error(`${item.name} removed from cart`);
+    setCartItems((prev) => prev.filter((i) => i.id !== id));
   };
 
-  const increaseQuantity = (product) => {
+  const increaseQuantity = (product) =>
     setCartItems((prev) =>
-      prev.map((item) =>
-        item.id === product.id
-          ? { ...item, quantity: item.quantity + 1 }
-          : item,
+      prev.map((i) =>
+        i.id === product.id ? { ...i, quantity: i.quantity + 1 } : i,
       ),
     );
-  };
 
-  const decreaseQuantity = (product) => {
+  const decreaseQuantity = (product) =>
     setCartItems((prev) => {
-      const existingItem = prev.find((item) => item.id === product.id);
-
-      if (existingItem && existingItem.quantity === 1) {
+      const item = prev.find((i) => i.id === product.id);
+      if (item?.quantity === 1)
         toast.error(`${product.name} removed from cart`);
-      }
-
       return prev
-        .map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity - 1 }
-            : item,
+        .map((i) =>
+          i.id === product.id ? { ...i, quantity: i.quantity - 1 } : i,
         )
-        .filter((item) => item.quantity > 0);
+        .filter((i) => i.quantity > 0);
     });
-  };
 
-  const clearCart = () => {
-    setCartItems([]);
-  };
+  const clearCart = () => setCartItems([]);
 
-  const value = {
-    cartItems,
-    totalCartCount,
-    totalPrice,
-    addToCart,
-    removeFromCart,
-    increaseQuantity,
-    decreaseQuantity,
-    clearCart,
-  };
-
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+  return (
+    <CartContext.Provider
+      value={{
+        cartItems,
+        totalCartCount,
+        totalPrice,
+        addToCart,
+        removeFromCart,
+        increaseQuantity,
+        decreaseQuantity,
+        clearCart,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
 }
