@@ -11,9 +11,11 @@ import {
 } from "lucide-react";
 import ProductCard from "../../components/Products/FeaturedProductCard";
 import { useCart } from "../../contexts/CartContext";
+import { useWishlist } from "../../contexts/WishlistContext";
 
 const ProductDetail = () => {
   const { addToCart } = useCart();
+  const { isWishlisted, toggleWishlist } = useWishlist();
   const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -148,10 +150,24 @@ const ProductDetail = () => {
             </button>
 
             <button
-              aria-label="Add to wishlist"
-              className="p-4 border border-gray-200 rounded-xl hover:bg-section transition-colors text-text/70 hover:text-red-500"
+              onClick={() => toggleWishlist(product)}
+              aria-label={
+                isWishlisted(product.id)
+                  ? "Remove from wishlist"
+                  : "Add to wishlist"
+              }
+              aria-pressed={isWishlisted(product.id)}
+              className={`p-4 border rounded-xl transition-colors ${
+                isWishlisted(product.id)
+                  ? "border-red-300 bg-red-50 text-red-500"
+                  : "border-gray-200 hover:bg-section text-text/70 hover:text-red-500"
+              }`}
             >
-              <Heart size={24} aria-hidden="true" />
+              <Heart
+                size={24}
+                aria-hidden="true"
+                className={isWishlisted(product.id) ? "fill-red-500" : ""}
+              />
             </button>
           </div>
         </div>

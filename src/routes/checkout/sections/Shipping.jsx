@@ -1,15 +1,18 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { MapPin, Mail, User, Phone } from "lucide-react";
-import { useEffect, useState } from "react";
 import Input from "../../../components/Common/Input";
 import Button from "../../../components/Common/Button";
-import { useInfo } from "../../../contexts/InfoContext";
+import { useAuth } from "../../../contexts/AuthContext";
 import useFormValidation from "../../../hooks/useFormValidation";
 import { required, email, minLength } from "../../../utils/validationRules";
 
 function Shipping() {
   const navigate = useNavigate();
-  const { personalInfo, shippingInfo, setShippingInfo } = useInfo();
+  // Read shippingInfo and its setter from CheckoutPage via Outlet context.
+  // This replaces useInfo() entirely — no global context needed for this.
+  const { shippingInfo, setShippingInfo } = useOutletContext();
+  const { user } = useAuth();
 
   const validationRules = {
     fullName: [required("full name")],
@@ -35,46 +38,52 @@ function Shipping() {
       validationRules,
     );
 
+  // Pre-fill on mount only — empty dependency array prevents the infinite
+  // re-render loop that was caused by having shippingInfo/setFormValues
+  // in the dependency array (they change every render → triggers effect →
+  // sets values → triggers re-render → repeat forever).
   useEffect(() => {
-    if (shippingInfo && shippingInfo.address) {
-      setFormValues(shippingInfo);
-    } else if (personalInfo) {
-      setFormValues({
-        fullName: personalInfo.fullName || "",
-        email: personalInfo.email || "",
-      });
-    }
-  }, [personalInfo, shippingInfo]);
+    setFormValues({
+      fullName: shippingInfo.fullName || user?.name || "",
+      email: shippingInfo.email || user?.email || "",
+      phone: shippingInfo.phone || "",
+      address: shippingInfo.address || "",
+      city: shippingInfo.city || "",
+      state: shippingInfo.state || "",
+      zip: shippingInfo.zip || "",
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // intentionally empty — run once on mount only
 
   const handleContinue = (e) => {
     e.preventDefault();
-
     if (!validate()) return;
-    setShippingInfo(values);
+    setShippingInfo(values); // save to CheckoutPage state for Review to read
     navigate("/checkout/payment");
   };
 
   return (
     <div className="bg-section border border-border-main rounded-xl p-6 shadow-sm">
       <div className="flex items-center gap-3 mb-8 pb-4 border-b border-border-main">
-        <div className="p-2 bg-primary/10 rounded-lg text-primary">
+        <div
+          className="p-2 bg-primary/10 rounded-lg text-primary"
+          aria-hidden="true"
+        >
           <MapPin size={24} />
         </div>
         <h2 className="text-xl font-bold text-text">Shipping Information</h2>
       </div>
 
-      <form onSubmit={handleContinue} className="space-y-6">
+      <form onSubmit={handleContinue} className="space-y-6" noValidate>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Input
             name="fullName"
             label="Full Name *"
-            type="text"
             icon={User}
             value={values.fullName}
             onChange={handleChange}
             error={errors.fullName}
           />
-
           <Input
             name="email"
             label="Email Address *"
@@ -85,7 +94,6 @@ function Shipping() {
             error={errors.email}
           />
         </div>
-
         <Input
           name="phone"
           label="Phone Number *"
@@ -94,7 +102,6 @@ function Shipping() {
           onChange={handleChange}
           error={errors.phone}
         />
-
         <Input
           name="address"
           label="Street Address *"
@@ -103,7 +110,6 @@ function Shipping() {
           onChange={handleChange}
           error={errors.address}
         />
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Input
             name="city"
@@ -127,7 +133,6 @@ function Shipping() {
             error={errors.zip}
           />
         </div>
-
         <Button
           text="Continue to Payment"
           type="primary"

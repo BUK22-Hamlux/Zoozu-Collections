@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import Button from "../Common/Button";
 import SearchForm from "../Common/SearchForm";
-import { X, Menu, Moon, Sun, ShoppingCart, User } from "lucide-react";
+import { X, Menu, Moon, Sun, ShoppingCart, User, Heart } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import { useCart } from "../../contexts/CartContext";
 import CartView from "../Cart/CartDrawer";
 import { useAuth } from "../../contexts/AuthContext";
+import { useWishlist } from "../../contexts/WishlistContext";
 
 function Navbar() {
   const { loggedIn, logout } = useAuth();
@@ -25,6 +26,7 @@ function Navbar() {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const { totalCartCount } = useCart();
+  const { wishlist } = useWishlist();
   const [openCartModal, setOpenCartModal] = useState(false);
 
   return (
@@ -88,6 +90,25 @@ function Navbar() {
           )}
         </button>
 
+        {/* Wishlist button — only shown when logged in */}
+        {loggedIn && (
+          <NavLink
+            to="/wishlist"
+            className="relative p-2 hover:bg-section rounded-full transition-colors"
+            aria-label={`Wishlist${wishlist.length > 0 ? `, ${wishlist.length} item${wishlist.length > 1 ? "s" : ""}` : ""}`}
+          >
+            <Heart size={20} aria-hidden="true" />
+            {wishlist.length > 0 && (
+              <span
+                aria-hidden="true"
+                className="absolute top-0 right-0 flex bg-red-500 text-white text-[10px] font-bold px-1.5 rounded-full border-2 border-background"
+              >
+                {wishlist.length}
+              </span>
+            )}
+          </NavLink>
+        )}
+
         <button
           onClick={() => setOpenCartModal(true)}
           className="relative p-2 hover:bg-section rounded-full transition-colors cursor-pointer"
@@ -116,10 +137,7 @@ function Navbar() {
               <User aria-hidden="true" />
             </NavLink>
             <button
-              onClick={() => {
-                logout();
-                navigate("/login");
-              }}
+              onClick={logout}
               className="hidden md:inline-flex px-4 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition-colors"
             >
               Logout
@@ -145,6 +163,7 @@ function Navbar() {
           aria-expanded={isMenuOpen}
           aria-controls="mobile-menu"
         >
+          {/* aria-hidden because the label is on the button above */}
           {isMenuOpen ? (
             <X size={24} aria-hidden="true" />
           ) : (
@@ -217,17 +236,39 @@ function Navbar() {
                 </button>
               </div>
               {loggedIn ? (
-                <NavLink to={"login"}>
+                <>
+                  <NavLink
+                    to="profile"
+                    className="p-3 text-base font-medium hover:bg-section rounded-lg transition-colors"
+                    onClick={toggleMenu}
+                  >
+                    My Profile
+                  </NavLink>
+                  <NavLink
+                    to="orders"
+                    className="p-3 text-base font-medium hover:bg-section rounded-lg transition-colors"
+                    onClick={toggleMenu}
+                  >
+                    My Orders
+                  </NavLink>
+                  <NavLink
+                    to="wishlist"
+                    className="p-3 text-base font-medium hover:bg-section rounded-lg transition-colors"
+                    onClick={toggleMenu}
+                  >
+                    My Wishlist
+                  </NavLink>
                   <Button
-                    text="logout"
+                    text="Logout"
                     type="NotPrimary"
+                    htmlType="button"
                     optionalClassName="w-full py-3 font-bold bg-red-500 hover:bg-red-600 text-white"
                     onClick={() => {
                       toggleMenu();
                       logout();
                     }}
                   />
-                </NavLink>
+                </>
               ) : (
                 <NavLink to={"login"}>
                   <Button

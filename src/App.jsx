@@ -24,6 +24,8 @@ import Shipping from "./routes/checkout/sections/Shipping";
 import Payment from "./routes/checkout/sections/Payment";
 import Review from "./routes/checkout/sections/Review";
 import NotFound from "./routes/NotFound";
+import OrderConfirmationPage from "./routes/orders/OrderConfirmationPage";
+import WishlistPage from "./routes/wishlist/WishlistPage";
 import ContactPage from "./routes/support/ContactPage";
 import ShippingInfoPage from "./routes/support/ShippingInfoPage";
 import ReturnsPage from "./routes/support/ReturnsPage";
@@ -37,10 +39,6 @@ const router = createBrowserRouter(
       <Route path="products/:id" element={<ProductDetail />} />
       <Route path="categories" element={<CategoriesPage />} />
       <Route path="product" element={<SearchProductPage />} />
-      <Route path="contact" element={<ContactPage />} />
-      <Route path="shipping" element={<ShippingInfoPage />} />
-      <Route path="returns" element={<ReturnsPage />} />
-      <Route path="faq" element={<FAQPage />} />
 
       <Route element={<PublicRoute />}>
         <Route path="register" element={<RegisterPage />} />
@@ -52,6 +50,8 @@ const router = createBrowserRouter(
         <Route path="cart" element={<CartPage />} />
         <Route path="profile" element={<ProfilePage />} />
         <Route path="orders" element={<OrderHistoryPage />} />
+        <Route path="order-confirmation" element={<OrderConfirmationPage />} />
+        <Route path="wishlist" element={<WishlistPage />} />
 
         <Route path="checkout" element={<CheckoutPage />}>
           <Route index element={<Navigate to="shipping" replace />} />
@@ -60,6 +60,12 @@ const router = createBrowserRouter(
           <Route path="review" element={<Review />} />
         </Route>
       </Route>
+
+      {/* Public support pages — accessible without login */}
+      <Route path="contact" element={<ContactPage />} />
+      <Route path="shipping" element={<ShippingInfoPage />} />
+      <Route path="returns" element={<ReturnsPage />} />
+      <Route path="faq" element={<FAQPage />} />
 
       <Route path="*" element={<NotFound />} />
     </Route>,

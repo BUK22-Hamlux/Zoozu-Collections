@@ -84,7 +84,7 @@ const FAQ_CATEGORIES = [
     items: [
       {
         q: "How do I reset my password?",
-        a: 'On the login page, click "Forgot Password?" and enter your email address. You\'ll receive a reset link within a few minutes. Check your spam folder if you don\'t see it.',
+        a: "On the login page, click \"Forgot Password?\" and enter your email address. You'll receive a reset link within a few minutes. Check your spam folder if you don't see it.",
       },
       {
         q: "How is my personal data used?",
@@ -111,20 +111,29 @@ function FAQItem({ q, a }) {
         className="w-full flex items-start justify-between gap-4 py-5 text-left hover:text-primary transition-colors"
       >
         <span className="font-semibold text-text text-sm">{q}</span>
-        {open
-          ? <ChevronUp  size={16} className="text-primary shrink-0 mt-0.5" aria-hidden="true" />
-          : <ChevronDown size={16} className="text-secondary shrink-0 mt-0.5" aria-hidden="true" />
-        }
+        {open ? (
+          <ChevronUp
+            size={16}
+            className="text-primary shrink-0 mt-0.5"
+            aria-hidden="true"
+          />
+        ) : (
+          <ChevronDown
+            size={16}
+            className="text-secondary shrink-0 mt-0.5"
+            aria-hidden="true"
+          />
+        )}
       </button>
-      {open && (
-        <p className="text-text/70 text-sm pb-5 leading-relaxed">{a}</p>
-      )}
+      {open && <p className="text-text/70 text-sm pb-5 leading-relaxed">{a}</p>}
     </div>
   );
 }
 
 function FAQPage() {
-  const [activeCategory, setActiveCategory] = useState(FAQ_CATEGORIES[0].category);
+  const [activeCategory, setActiveCategory] = useState(
+    FAQ_CATEGORIES[0].category,
+  );
 
   const current = FAQ_CATEGORIES.find((c) => c.category === activeCategory);
 
@@ -140,9 +149,12 @@ function FAQPage() {
         </h1>
         <p className="text-text/60 max-w-md mx-auto">
           Can't find an answer? We're happy to help —{" "}
-          <Link to="/contact" className="text-primary hover:underline font-medium">
+          <Link
+            to="/contact"
+            className="text-primary hover:underline font-medium"
+          >
             contact our support team
-          </Link>.
+          </Link>
         </p>
       </div>
 

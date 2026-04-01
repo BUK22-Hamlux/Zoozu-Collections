@@ -1,33 +1,32 @@
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { useCart } from "../../../contexts/CartContext";
-import { useInfo } from "../../../contexts/InfoContext";
 import { useOrders } from "../../../contexts/OrdersContext";
 import BouncingDots from "../../../components/Common/BouncingDots";
 import toast from "react-hot-toast";
 import ReviewCard from "../../../components/Checkout/ReviewCard";
 import CartFooter from "../../../components/Cart/CartFooter";
+import { formatCurrency } from "../../../utils/formatCurrency";
 
 function Review() {
   const navigate = useNavigate();
+  const { shippingInfo } = useOutletContext();
   const { cartItems, totalPrice, clearCart } = useCart();
-  const { shippingInfo } = useInfo();
   const { addOrder } = useOrders();
   const [isLoading, setIsLoading] = useState(false);
 
   const handlePlaceOrder = async () => {
     try {
       setIsLoading(true);
-
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      addOrder({ cartItems, totalPrice, shippingInfo });
-
+      const newOrder = addOrder({ cartItems, totalPrice, shippingInfo });
       clearCart();
-
       toast.success("Order placed! Your items are on the way.");
-      navigate("/dashboard");
-    } catch (error) {
-      console.error(error);
+      // Navigate to confirmation page and pass the order data via location state.
+      // Using state instead of URL params keeps sensitive data out of the URL.
+      navigate("/order-confirmation", { state: { order: newOrder } });
+    } catch (err) {
+      console.error(err);
       toast.error("Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
@@ -36,7 +35,6 @@ function Review() {
 
   return (
     <div className="space-y-6">
-      {/* Shipping summary */}
       <ReviewCard
         title="Shipping Address"
         onEdit={() => navigate("/checkout/shipping")}
@@ -52,7 +50,6 @@ function Review() {
         </div>
       </ReviewCard>
 
-      {/* Payment summary */}
       <ReviewCard
         title="Payment Method"
         onEdit={() => navigate("/checkout/payment")}
@@ -60,7 +57,6 @@ function Review() {
         <p className="text-secondary">Credit Card — secure payment</p>
       </ReviewCard>
 
-      {/* Items summary */}
       <ReviewCard title="Order Items">
         <div className="space-y-3">
           {cartItems.map((item) => (
@@ -80,7 +76,7 @@ function Review() {
                 </div>
               </div>
               <p className="text-text font-semibold text-sm">
-                ₦{(item.price * item.quantity).toLocaleString()}
+                {formatCurrency(item.price * item.quantity)}
               </p>
             </div>
           ))}
