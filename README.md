@@ -8,19 +8,41 @@ A full-featured frontend e-commerce application for Nigerian traditional and con
 
 ## Live Demo
 
-> Deploy to Vercel (instructions below) and paste your URL here.
+> Deploy to Vercel : zoozu-collections.vercel.app
 
 ---
 
 ## Screenshots
 
-> Add screenshots of your landing page, product page, and checkout here after deployment.
+### Landing page
+
+> ![Landing Page](./screenshots/landing-page.webp)
+
+### Product page
+
+> ![Product Page](./screenshots/product-page.webp)
+
+### Dashboard page
+
+> ![Dashboard Page](./screenshots/dashboard-page.webp)
+
+### Register page
+
+> ![Register Page](./screenshots/register-page.webp)
+
+### Mobile View & Checkout
+
+<p align="center">
+  <img src="./screenshots/mobile-view.webp" width="30%" alt="Mobile View" />
+  <img src="./screenshots/checkout.webp" width="65%" alt="Checkout Process" />
+</p>
 
 ---
 
 ## Features
 
 ### Shopping Experience
+
 - Product catalogue with **16 products** across 9 Nigerian fashion categories
 - **Filter** by category and price range
 - **Sort** by featured, price (low/high), and highest rated
@@ -30,6 +52,7 @@ A full-featured frontend e-commerce application for Nigerian traditional and con
 - **Wishlist** — save items you love, view and manage from a dedicated page
 
 ### Cart & Checkout
+
 - Persistent shopping cart (per user, survives page refresh)
 - Cart drawer with quantity controls
 - Full-page cart view
@@ -43,34 +66,40 @@ A full-featured frontend e-commerce application for Nigerian traditional and con
 - **Order confirmation page** with full order summary after placing an order
 
 ### User Accounts
+
 - Register and login — email uniqueness enforced on registration
 - All user data isolated per account: cart, orders, wishlist, and preferences are never shared between users
 - **Protected routes** — checkout, dashboard, profile, orders, and wishlist require login
 - **Public routes** — login and register redirect to dashboard if already logged in
 
 ### Dashboard
+
 - Welcome banner with the user's name
 - Stats: cart item count, cart total, total orders
 - Recent orders (last 3) with a "View all" link when more exist
 
 ### Order History
+
 - Full order history page at `/orders`
 - **Filter by status**: All, Processing, Shipped, Delivered, Cancelled
 - Each order is expandable to show full item list, subtotals, total, and shipping address
 
 ### Profile
+
 - Edit display name (email is read-only — it's the login key)
 - Change password with current password verification
 - Upload profile picture
 - Notification preferences (Email, Marketing, SMS) persisted per user
 
 ### Support Pages
+
 - **Contact Us** — contact cards and a working message form
 - **Shipping Info** — delivery options, timelines, coverage, and package protection
 - **Returns & Refunds** — 30-day policy, eligible/ineligible items, how-to steps, refund timelines
 - **FAQ** — 5 categories, accordion answers, sidebar navigation
 
 ### Technical Highlights
+
 - **Dark mode** with localStorage persistence and flash-free loading
 - **Fully accessible** — ARIA roles, labels, keyboard navigation, focus management throughout
 - **Responsive** — mobile-first layout with a full mobile navigation menu
@@ -84,21 +113,22 @@ A full-featured frontend e-commerce application for Nigerian traditional and con
 
 ## Tech Stack
 
-| Technology | Version | Purpose |
-|---|---|---|
-| React | 19.2 | UI framework |
-| Vite | 7.3 | Build tool and dev server |
-| Tailwind CSS | 4.2 | Utility-first styling |
-| React Router | 7.13 | Client-side routing |
-| Framer Motion | 12 | Page and component animations |
-| Lucide React | 0.574 | Icon library |
-| React Hot Toast | 2.6 | Toast notifications |
+| Technology      | Version | Purpose                       |
+| --------------- | ------- | ----------------------------- |
+| React           | 19.2    | UI framework                  |
+| Vite            | 7.3     | Build tool and dev server     |
+| Tailwind CSS    | 4.2     | Utility-first styling         |
+| React Router    | 7.13    | Client-side routing           |
+| Framer Motion   | 12      | Page and component animations |
+| Lucide React    | 0.574   | Icon library                  |
+| React Hot Toast | 2.6     | Toast notifications           |
 
 ---
 
 ## Getting Started
 
 ### Prerequisites
+
 - Node.js 18 or higher
 - npm 9 or higher
 
@@ -122,12 +152,12 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ### Available Scripts
 
-| Script | Description |
-|---|---|
-| `npm run dev` | Start the development server with hot reload |
-| `npm run build` | Build the project for production |
-| `npm run preview` | Preview the production build locally |
-| `npm run lint` | Run ESLint to check for code issues |
+| Script            | Description                                  |
+| ----------------- | -------------------------------------------- |
+| `npm run dev`     | Start the development server with hot reload |
+| `npm run build`   | Build the project for production             |
+| `npm run preview` | Preview the production build locally         |
+| `npm run lint`    | Run ESLint to check for code issues          |
 
 ---
 
@@ -220,9 +250,11 @@ zoozu-collections/
 ## Key Technical Decisions
 
 ### Per-user data isolation
+
 Cart, orders, wishlist, and preferences are all stored inside each user's record in the `zoozu-users` localStorage key. This means switching between accounts automatically loads that account's data with no crossover. The auth session (`zoozu-auth-user`) only stores non-sensitive display data (name, email, profile image) — passwords stay only in the users list.
 
 ### Custom form validation hook
+
 `useFormValidation` accepts validation rules as arrays of composable functions. Each rule is a pure function that returns an error string or null. This makes rules reusable across forms and easy to combine:
 
 ```js
@@ -234,9 +266,11 @@ const rules = {
 ```
 
 ### Checkout state management
+
 Shipping information is lifted to `CheckoutPage` and passed to child routes via React Router's `useOutletContext`. This avoids making shipping info global context — it only needs to exist during the checkout flow, so it lives as local state in the parent route and is discarded when the user navigates away.
 
 ### Order confirmation race condition fix
+
 After placing an order, `navigate()` fires before `clearCart()`, and `clearCart()` is deferred with `setTimeout(0)`. This prevents the empty-cart guard from intercepting the navigation and redirecting to `/cart` before the confirmation page loads.
 
 ---

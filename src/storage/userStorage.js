@@ -30,13 +30,6 @@ export const saveAuthUser = (user) => {
   else localStorage.removeItem(AUTH_KEY);
 };
 
-// ─── Per-user data helpers ────────────────────────────────────────────────────
-// All user-specific data (orders, cart, preferences) is stored INSIDE the
-// user object in the users list. This means:
-//   - Each user's data is completely isolated
-//   - Logging in as a different user loads that user's data automatically
-//   - No global keys like "zoozu-orders" that all users share
-
 export const getUserRecord = (email) => {
   const users = getUsers();
   return users.find((u) => u.email === email) || null;

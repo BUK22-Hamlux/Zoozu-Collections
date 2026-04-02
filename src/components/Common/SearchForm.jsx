@@ -105,7 +105,6 @@ function SearchForm({
           placeholder={placeholder}
           className="w-full pl-10 pr-8 py-3 rounded-lg bg-section/50 border border-border-main text-text placeholder-secondary focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm"
         />
-        {/* Clear button — only shown when there's a query */}
         {query && (
           <button
             type="button"
@@ -118,7 +117,6 @@ function SearchForm({
         )}
       </div>
 
-      {/* Dropdown results */}
       {isOpen && (
         <div
           role="listbox"
@@ -126,7 +124,6 @@ function SearchForm({
           className="absolute top-full left-0 right-0 mt-1 bg-background border border-border-main rounded-xl shadow-xl z-[100] overflow-hidden"
         >
           {displayResults.length === 0 ? (
-            // No results state
             <div className="px-4 py-6 text-center text-secondary text-sm">
               No products found for{" "}
               <span className="font-semibold text-text">
@@ -168,7 +165,6 @@ function SearchForm({
                 ))}
               </ul>
 
-              {/* Footer — shows total count and link to full results page */}
               <div className="border-t border-border-main">
                 <button
                   type="button"

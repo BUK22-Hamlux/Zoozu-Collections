@@ -11,12 +11,10 @@ export function WishlistProvider({ children }) {
     user ? getUserRecord(user.email)?.wishlist || [] : [],
   );
 
-  // Reload when user changes (login/logout)
   useEffect(() => {
     setWishlist(user ? getUserRecord(user.email)?.wishlist || [] : []);
   }, [user?.email]);
 
-  // Persist into the user's record on every change
   useEffect(() => {
     if (user?.email) {
       updateUserRecord(user.email, { wishlist });
