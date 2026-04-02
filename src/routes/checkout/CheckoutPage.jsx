@@ -1,19 +1,13 @@
-import { useState } from "react";
-import { Outlet, NavLink, useLocation, Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Outlet, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { ChevronLeft, Truck, CreditCard, CheckCircle } from "lucide-react";
 import CheckoutSteps from "../../components/Checkout/CheckoutSteps";
 import { useCart } from "../../contexts/CartContext";
 
 function CheckoutPage() {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const { cartItems } = useCart();
-
-  // Guard: redirect to cart if the user somehow arrives at checkout with
-  // an empty cart — e.g. by typing /checkout directly in the URL bar,
-  // or after the cart was cleared mid-session.
-  if (cartItems.length === 0) {
-    return <Navigate to="/cart" replace />;
-  }
 
   const [shippingInfo, setShippingInfo] = useState({
     fullName: "",
@@ -25,6 +19,11 @@ function CheckoutPage() {
     zip: "",
   });
 
+  useEffect(() => {
+    if (cartItems.length === 0) {
+      navigate("/cart", { replace: true });
+    }
+  }, []);
   const isShipping = pathname.includes("shipping");
   const isPayment = pathname.includes("payment");
   const isReview = pathname.includes("review");

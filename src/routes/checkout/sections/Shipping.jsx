@@ -9,8 +9,6 @@ import { required, email, minLength } from "../../../utils/validationRules";
 
 function Shipping() {
   const navigate = useNavigate();
-  // Read shippingInfo and its setter from CheckoutPage via Outlet context.
-  // This replaces useInfo() entirely — no global context needed for this.
   const { shippingInfo, setShippingInfo } = useOutletContext();
   const { user } = useAuth();
 
@@ -38,10 +36,6 @@ function Shipping() {
       validationRules,
     );
 
-  // Pre-fill on mount only — empty dependency array prevents the infinite
-  // re-render loop that was caused by having shippingInfo/setFormValues
-  // in the dependency array (they change every render → triggers effect →
-  // sets values → triggers re-render → repeat forever).
   useEffect(() => {
     setFormValues({
       fullName: shippingInfo.fullName || user?.name || "",
@@ -52,13 +46,12 @@ function Shipping() {
       state: shippingInfo.state || "",
       zip: shippingInfo.zip || "",
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // intentionally empty — run once on mount only
+  }, []);
 
   const handleContinue = (e) => {
     e.preventDefault();
     if (!validate()) return;
-    setShippingInfo(values); // save to CheckoutPage state for Review to read
+    setShippingInfo(values);
     navigate("/checkout/payment");
   };
 

@@ -12,8 +12,6 @@ function OrderConfirmationPage() {
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  // If a user lands here with no order data (e.g. typed /order-confirmation
-  // directly), redirect them to the dashboard gracefully.
   if (!state?.order) {
     return (
       <div className="min-h-screen flex items-center justify-center px-4 text-center">

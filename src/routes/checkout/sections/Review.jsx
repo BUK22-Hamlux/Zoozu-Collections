@@ -19,12 +19,13 @@ function Review() {
     try {
       setIsLoading(true);
       await new Promise((resolve) => setTimeout(resolve, 2000));
+
       const newOrder = addOrder({ cartItems, totalPrice, shippingInfo });
-      clearCart();
+
       toast.success("Order placed! Your items are on the way.");
-      // Navigate to confirmation page and pass the order data via location state.
-      // Using state instead of URL params keeps sensitive data out of the URL.
+
       navigate("/order-confirmation", { state: { order: newOrder } });
+      clearCart();
     } catch (err) {
       console.error(err);
       toast.error("Something went wrong. Please try again.");

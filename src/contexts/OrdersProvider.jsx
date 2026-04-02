@@ -6,18 +6,14 @@ import { getUserOrders, saveUserOrders } from "../storage/userStorage";
 export function OrdersProvider({ children }) {
   const { user } = useAuth();
 
-  // Load orders for the currently logged-in user.
-  // When a different user logs in, their orders load automatically.
   const [orders, setOrders] = useState(() =>
     user ? getUserOrders(user.email) : [],
   );
 
-  // Reload when user changes (login/logout/switch)
   useEffect(() => {
     setOrders(user ? getUserOrders(user.email) : []);
   }, [user?.email]);
 
-  // Persist back into the user's record on every change
   useEffect(() => {
     if (user?.email) {
       saveUserOrders(user.email, orders);
@@ -41,7 +37,6 @@ export function OrdersProvider({ children }) {
       })),
     };
 
-    // Newest order appears first
     setOrders((prev) => [newOrder, ...prev]);
     return newOrder;
   };

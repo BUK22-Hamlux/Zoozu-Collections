@@ -8,7 +8,6 @@ import { Toaster } from "react-hot-toast";
 import RootLayout from "./components/Layout/RootLayout";
 
 function AuthGuard() {
-  const { user } = useAuth();
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
